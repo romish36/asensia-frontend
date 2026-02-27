@@ -9,11 +9,14 @@ function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { fetchMyPermissions } = usePermissionContext();
+    const { fetchMyPermissions, fetchCategories, setAppLoading } = usePermissionContext();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        setAppLoading(true);
 
         const endpoint = `${API_BASE_URL}/auth/login`;
         const payload = { email: email.trim(), password };
@@ -34,8 +37,11 @@ function LoginPage() {
                 sessionStorage.setItem('token', data.token);
                 sessionStorage.setItem('user', JSON.stringify(data));
 
-                // Fetch permissions immediately
-                await fetchMyPermissions();
+                // Fetch data immediately
+                await Promise.all([
+                    fetchMyPermissions(),
+                    fetchCategories()
+                ]);
 
                 toast.success('Login successful!');
 
@@ -59,10 +65,14 @@ function LoginPage() {
                 }
             } else {
                 toast.error(data.message || 'Login failed');
+                setLoading(false);
+                setAppLoading(false);
             }
         } catch (error) {
             console.error('Auth error:', error);
             toast.error('Something went wrong. Please try again.');
+            setLoading(false);
+            setAppLoading(false);
         }
     };
 
@@ -130,8 +140,8 @@ function LoginPage() {
                         </div>
                     </div>
 
-                    <button type="submit" className="login-btn">
-                        Login
+                    <button type="submit" className="login-btn" disabled={loading}>
+                        {loading ? 'Logging in...' : 'Login'}
                     </button>
                 </form>
             </div>

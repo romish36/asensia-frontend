@@ -9,10 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
 import '../styles/ProductList.css';
 
+
 function ProductList({ onAddProduct, onEditProduct }) {
-    const { hasPermission } = usePermissionContext();
+    const isInitialMount = React.useRef(true);
+    const { hasPermission, categories } = usePermissionContext();
     const navigate = useNavigate();
     const token = sessionStorage.getItem('token');
     const getRolePrefix = () => {
@@ -33,10 +36,13 @@ function ProductList({ onAddProduct, onEditProduct }) {
     const [companies, setCompanies] = useState([]);
     const [selectedCompany, setSelectedCompany] = useState('');
     const [userRole, setUserRole] = useState('');
-    const [categories, setCategories] = useState([]);
+    // Categories are now provided by PermissionContext
     const [selectedCategory, setSelectedCategory] = useState('');
 
     useEffect(() => {
+        if (!isInitialMount.current) return;
+        isInitialMount.current = false;
+
         const user = JSON.parse(sessionStorage.getItem('user'));
         if (user) {
             setUserRole(user.role);
@@ -44,8 +50,7 @@ function ProductList({ onAddProduct, onEditProduct }) {
                 fetchCompanies();
             }
         }
-        fetchCategories();
-    }, []);
+    }, [isInitialMount]);
 
     const [activeCompany, setActiveCompany] = useState('');
     const [activeCategory, setActiveCategory] = useState('');
@@ -136,14 +141,7 @@ function ProductList({ onAddProduct, onEditProduct }) {
         }
     };
 
-    const fetchCategories = async () => {
-        try {
-            const data = await fetchApi('/category');
-            setCategories(data);
-        } catch (error) {
-            console.error('Error fetching categories:', error);
-        }
-    };
+
 
     const fetchProducts = async (searchQuery = '', currentPage = 1, limit = 10) => {
         try {
@@ -449,6 +447,10 @@ function ProductList({ onAddProduct, onEditProduct }) {
         }
     };
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             {/* Header: Title and Action Buttons */}
@@ -575,13 +577,7 @@ function ProductList({ onAddProduct, onEditProduct }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
-                            <tr>
-                                <td className="list-page-table-empty" colSpan={userRole === 'SUPER_ADMIN' ? 11 : 10}>
-                                    Loading products...
-                                </td>
-                            </tr>
-                        ) : sortedRows.length === 0 ? (
+                        {sortedRows.length === 0 ? (
                             <tr>
                                 <td className="list-page-table-empty" colSpan={userRole === 'SUPER_ADMIN' ? 11 : 10}>
                                     No records found

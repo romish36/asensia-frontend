@@ -6,6 +6,8 @@ import CompanyDetailsModal from '../components/modals/CompanyDetailsModal';
 import API_BASE_URL from '../config/apiConfig.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 
 function CompanyList({ onAddCompany, onEditCompany, onViewProfile }) {
@@ -142,6 +144,10 @@ function CompanyList({ onAddCompany, onEditCompany, onViewProfile }) {
         return out;
     }, [currentPage, totalPages]);
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             {/* Header: Title and Action Buttons */}
@@ -188,11 +194,7 @@ function CompanyList({ onAddCompany, onEditCompany, onViewProfile }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
-                            <tr>
-                                <td className="list-page-table-empty" colSpan={8}>Loading companies...</td>
-                            </tr>
-                        ) : rows.length > 0 ? (
+                        {rows.length > 0 ? (
                             rows.map((item) => (
                                 <tr key={item._id || item.companyId}>
                                     <td>

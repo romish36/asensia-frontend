@@ -7,6 +7,8 @@ import API_BASE_URL from '../config/apiConfig.js';
 import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 
 function CustomerList({ onNavigateToProfile, onAddCustomer, onEditCustomer }) {
@@ -330,6 +332,10 @@ function CustomerList({ onNavigateToProfile, onAddCustomer, onEditCustomer }) {
         }
     };
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             {/* Header: Title and Action Buttons */}
@@ -425,9 +431,7 @@ function CustomerList({ onNavigateToProfile, onAddCustomer, onEditCustomer }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
-                            <tr><td colSpan={8} className="list-page-table-empty">Loading...</td></tr>
-                        ) : sortedRows.length === 0 ? (
+                        {sortedRows.length === 0 ? (
                             <tr>
                                 <td className="list-page-table-empty" colSpan={8}>
                                     No records found

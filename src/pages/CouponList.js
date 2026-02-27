@@ -4,6 +4,8 @@ import CouponForm from './CouponForm';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 const CouponList = () => {
     const [coupons, setCoupons] = useState([]);
@@ -79,6 +81,10 @@ const CouponList = () => {
         );
     }
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             <div className="list-page-header">
@@ -111,9 +117,7 @@ const CouponList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
-                            <tr><td colSpan="6" className="list-page-table-empty">Loading coupons...</td></tr>
-                        ) : filteredCoupons.length > 0 ? (
+                        {filteredCoupons.length > 0 ? (
                             filteredCoupons.map((coupon) => (
                                 <tr key={coupon._id}>
                                     <td><strong style={{ color: '#1e3a8a' }}>{coupon.couponCode}</strong></td>

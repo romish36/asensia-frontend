@@ -8,6 +8,8 @@ import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import AirDatePicker from '../components/ui/AirDatePicker';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 
 function formatDateDDMMYYYY(value) {
@@ -397,6 +399,10 @@ function InvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigateToProfi
         }
     };
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             {/* Header: Title and Action Buttons */}
@@ -519,13 +525,7 @@ function InvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigateToProfi
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
-                            <tr>
-                                <td className="list-page-table-empty" colSpan={totalCols}>
-                                    Loading...
-                                </td>
-                            </tr>
-                        ) : pagedRows.length === 0 ? (
+                        {pagedRows.length === 0 ? (
                             <tr>
                                 <td className="list-page-table-empty" colSpan={totalCols}>
                                     No records found

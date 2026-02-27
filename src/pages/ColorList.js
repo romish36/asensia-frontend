@@ -6,6 +6,8 @@ import API_BASE_URL from '../config/apiConfig.js';
 import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 
 function ColorList({ onAdd, onEdit }) {
@@ -100,6 +102,10 @@ function ColorList({ onAdd, onEdit }) {
     // if (loading) return <div className="list-page-container">Loading colors...</div>;
 
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             <div className="list-page-header">
@@ -127,9 +133,7 @@ function ColorList({ onAdd, onEdit }) {
                 <table className="list-page-table">
                     <thead><tr><th>COLOR NAME</th><th>ACTIONS</th></tr></thead>
                     <tbody>
-                        {loading ? (
-                            <tr><td className="list-page-table-empty" colSpan={2}>Loading...</td></tr>
-                        ) : currentItems.length > 0 ? (
+                        {currentItems.length > 0 ? (
                             currentItems.map((item) => (
                                 <tr key={item._id}>
                                     <td>{item.colorName}</td>

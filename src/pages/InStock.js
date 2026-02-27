@@ -8,6 +8,8 @@ import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import AirDatePicker from '../components/ui/AirDatePicker';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 
 function parseDDMMYYYY(dateStr) {
@@ -366,6 +368,10 @@ function InStock() {
         return out;
     }, [currentPage, totalPages]);
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             {/* Header: Title and Action Buttons */}
@@ -486,9 +492,7 @@ function InStock() {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
-                            <tr><td colSpan={totalCols} className="list-page-table-empty">Loading...</td></tr>
-                        ) : sortedData.length > 0 ? (
+                        {sortedData.length > 0 ? (
                             sortedData.map((item, index) => (
                                 <tr key={item.id}>
                                     <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>

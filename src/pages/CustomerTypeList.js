@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 
 function CustomerTypeList({ onAddType, onEditType }) {
@@ -110,6 +112,10 @@ function CustomerTypeList({ onAddType, onEditType }) {
         return out;
     }, [currentPage, totalPages]);
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             <div className="list-page-header">
@@ -134,51 +140,47 @@ function CustomerTypeList({ onAddType, onEditType }) {
             </div>
 
             <div className="list-page-table-wrapper">
-                {loading ? (
-                    <div style={{ textAlign: 'center', padding: '20px' }}>Loading...</div>
-                ) : (
-                    <table className="list-page-table">
-                        <thead>
-                            <tr>
-                                <th>CUSTOMER TYPE</th>
-                                {userRole === 'SUPER_ADMIN' && <th>COMPANY ID</th>}
-                                <th>ACTIONS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currentItems.length > 0 ? (
-                                currentItems.map((item) => (
-                                    <tr key={item._id}>
-                                        <td>{item.customerTypeName}</td>
-                                        {userRole === 'SUPER_ADMIN' && <td>{item.companyId}</td>}
-                                        <td>
-                                            <div className="list-page-action-icons">
-                                                {hasPermission('CustomerType', 'update') && (
-                                                    <button type="button" className="list-page-icon-btn" title="Edit" onClick={() => handleEdit(item)}>
-                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                                        </svg>
-                                                    </button>
-                                                )}
-                                                {hasPermission('CustomerType', 'delete') && (
-                                                    <button type="button" className="list-page-icon-btn" title="Delete" onClick={() => handleDelete(item._id)}>
-                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                            <polyline points="3 6 5 6 21 6"></polyline>
-                                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                        </svg>
-                                                    </button>
-                                                )}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr><td className="list-page-table-empty" colSpan={userRole === 'SUPER_ADMIN' ? 3 : 2}>No records found</td></tr>
-                            )}
-                        </tbody>
-                    </table>
-                )}
+                <table className="list-page-table">
+                    <thead>
+                        <tr>
+                            <th>CUSTOMER TYPE</th>
+                            {userRole === 'SUPER_ADMIN' && <th>COMPANY ID</th>}
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentItems.length > 0 ? (
+                            currentItems.map((item) => (
+                                <tr key={item._id}>
+                                    <td>{item.customerTypeName}</td>
+                                    {userRole === 'SUPER_ADMIN' && <td>{item.companyId}</td>}
+                                    <td>
+                                        <div className="list-page-action-icons">
+                                            {hasPermission('CustomerType', 'update') && (
+                                                <button type="button" className="list-page-icon-btn" title="Edit" onClick={() => handleEdit(item)}>
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                    </svg>
+                                                </button>
+                                            )}
+                                            {hasPermission('CustomerType', 'delete') && (
+                                                <button type="button" className="list-page-icon-btn" title="Delete" onClick={() => handleDelete(item._id)}>
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    </svg>
+                                                </button>
+                                            )}
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr><td className="list-page-table-empty" colSpan={userRole === 'SUPER_ADMIN' ? 3 : 2}>No records found</td></tr>
+                        )}
+                    </tbody>
+                </table>
             </div>
 
             <div className="list-page-footer">

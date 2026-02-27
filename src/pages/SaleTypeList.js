@@ -6,6 +6,8 @@ import API_BASE_URL from '../config/apiConfig.js';
 import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 
 function SaleTypeList({ onAdd, onEdit }) {
@@ -99,6 +101,10 @@ function SaleTypeList({ onAdd, onEdit }) {
     // if (loading) return <div className="list-page-container">Loading sale types...</div>;
 
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             <div className="list-page-header">
@@ -126,9 +132,7 @@ function SaleTypeList({ onAdd, onEdit }) {
                 <table className="list-page-table">
                     <thead><tr><th>NAME</th><th>SALE TYPE TAX 1 (%)</th><th>SALE TYPE TAX 2 (%)</th><th>ACTIONS</th></tr></thead>
                     <tbody>
-                        {loading ? (
-                            <tr><td className="list-page-table-empty" colSpan={4}>Loading...</td></tr>
-                        ) : currentItems.length > 0 ? (
+                        {currentItems.length > 0 ? (
                             currentItems.map((item) => (
                                 <tr key={item._id}>
                                     <td>{item.saleTypeName}</td>

@@ -6,6 +6,8 @@ import API_BASE_URL from '../config/apiConfig.js';
 import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 
 function GradeList({ onAddGrade, onEditGrade }) {
@@ -118,6 +120,10 @@ function GradeList({ onAddGrade, onEditGrade }) {
         return out;
     }, [safePage, totalPages]);
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             <div className="list-page-header">
@@ -152,9 +158,7 @@ function GradeList({ onAddGrade, onEditGrade }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
-                            <tr><td colSpan={userRole === 'SUPER_ADMIN' ? 3 : 2}>Loading...</td></tr>
-                        ) : currentItems.length > 0 ? (
+                        {currentItems.length > 0 ? (
                             currentItems.map((item) => (
                                 <tr key={item._id}>
                                     <td>{item.gradeName}</td>

@@ -7,6 +7,8 @@ import API_BASE_URL from '../config/apiConfig.js';
 import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 
 function TransporterList({ onNavigateToProfile, onAddTransporter, onEditTransporter }) {
@@ -313,6 +315,10 @@ function TransporterList({ onNavigateToProfile, onAddTransporter, onEditTranspor
         }
     };
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             <div className="list-page-header">
@@ -394,9 +400,7 @@ function TransporterList({ onNavigateToProfile, onAddTransporter, onEditTranspor
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
-                            <tr><td className="list-page-table-empty" colSpan={7}>Loading...</td></tr>
-                        ) : sortedRows.length === 0 ? (
+                        {sortedRows.length === 0 ? (
                             <tr><td className="list-page-table-empty" colSpan={7}>No records found</td></tr>
                         ) : (
                             sortedRows.map((r) => (

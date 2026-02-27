@@ -5,6 +5,7 @@ import API_BASE_URL from '../../config/apiConfig.js';
 
 
 function AddProductModal({ isOpen, onClose, isPage }) {
+    const isInitialMount = React.useRef(true);
     const [formData, setFormData] = useState({
         companyId: '', // For Super Admin
         categoryId: '',
@@ -33,6 +34,9 @@ function AddProductModal({ isOpen, onClose, isPage }) {
     const dropdownRef = React.useRef(null);
 
     useEffect(() => {
+        if (!isInitialMount.current) return;
+        isInitialMount.current = false;
+
         const user = JSON.parse(sessionStorage.getItem('user'));
         if (user) {
             setUserRole(user.role);

@@ -8,6 +8,7 @@ import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import AirDatePicker from '../components/ui/AirDatePicker';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
 
 
 function formatDateDDMMYYYY(value) {
@@ -203,8 +204,6 @@ function PurchaseInvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigat
     return out;
   }, [page, totalPages]);
 
-  // ... (onSubmitFilters, onResetFilters, toggleActive, deleteRow, etc. stay same) ...
-
   const onSubmitFilters = (e) => {
     e.preventDefault();
 
@@ -383,10 +382,7 @@ function PurchaseInvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigat
 
   const handleSellerClick = async (invoice) => {
     try {
-      // In PurchaseOrder model, purchaseCompanyId corresponds to the Seller's ID
       if (!invoice.purchaseCompanyId) {
-        // Fallback or error if ID is missing
-        // It might be just `companyId` if the schema is confusing, but based on model review it is purchaseCompanyId
         toast.error("Seller ID not found in invoice");
         return;
       }
@@ -420,6 +416,10 @@ function PurchaseInvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigat
     setShowAddForm(false);
     setEditingRow(null);
   };
+
+  if (loading) {
+    return <PageSkeleton />;
+  }
 
   return (
     <div className="list-page-container">
@@ -546,13 +546,7 @@ function PurchaseInvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigat
             </tr>
           </thead>
           <tbody>
-            {loading ? (
-              <tr>
-                <td className="list-page-table-empty" colSpan={totalCols}>
-                  Loading...
-                </td>
-              </tr>
-            ) : pagedRows.length === 0 ? (
+            {pagedRows.length === 0 ? (
               <tr>
                 <td className="list-page-table-empty" colSpan={totalCols}>
                   No records found

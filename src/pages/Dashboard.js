@@ -96,7 +96,7 @@ const ICONS = {
 };
 
 function Dashboard({ onNavigate }) {
-  const { hasPermission } = usePermissionContext();
+  const { hasPermission, setAppLoading } = usePermissionContext();
   const [userData, setUserData] = useState(null);
   const [companyData, setCompanyData] = useState(null);
   const [welcomeMessage, setWelcomeMessage] = useState('Welcome');
@@ -208,18 +208,21 @@ function Dashboard({ onNavigate }) {
   useEffect(() => {
     const fetchStats = async () => {
       try {
+        setAppLoading(true);
         const data = await fetchApi('/dashboard/stats');
         if (data) {
           setDashboardStats(data);
         }
       } catch (error) {
         console.error("Dashboard Stats Fetch Error:", error);
+      } finally {
+        setAppLoading(false);
       }
     };
 
     fetchStats();
-    const interval = setInterval(fetchStats, 30000); // Poll every 30s
-    return () => clearInterval(interval);
+    // const interval = setInterval(fetchStats, 30000); // Poll every 30s
+    // return () => clearInterval(interval);
   }, []);
 
   const mappedRecentPurchasePayments = useMemo(() => {

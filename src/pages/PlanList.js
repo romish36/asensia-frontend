@@ -5,6 +5,8 @@ import API_BASE_URL from '../config/apiConfig.js';
 import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 function PlanList({ onAddPlan, onEditPlan }) {
     const { hasPermission } = usePermissionContext();
@@ -105,6 +107,10 @@ function PlanList({ onAddPlan, onEditPlan }) {
         return out;
     }, [currentPage, totalPages]);
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             <div className="list-page-header">
@@ -145,11 +151,7 @@ function PlanList({ onAddPlan, onEditPlan }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
-                            <tr>
-                                <td className="list-page-table-empty" colSpan={isSuperAdmin ? 9 : 8}>Loading plans...</td>
-                            </tr>
-                        ) : rows.length > 0 ? (
+                        {rows.length > 0 ? (
                             rows.map((item) => (
                                 <tr key={item._id}>
                                     <td>{item.planId}</td>

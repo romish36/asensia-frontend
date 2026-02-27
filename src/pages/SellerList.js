@@ -7,6 +7,8 @@ import API_BASE_URL from '../config/apiConfig.js';
 import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 
 const SAMPLE_DATA = [
@@ -415,6 +417,10 @@ function SellerList({ onNavigateToProfile, onAddSeller, onEditSeller }) {
         }
     };
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             {/* Header: Title and Action Buttons */}
@@ -507,9 +513,7 @@ function SellerList({ onNavigateToProfile, onAddSeller, onEditSeller }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
-                            <tr><td colSpan={7} style={{ textAlign: 'center' }}>Loading...</td></tr>
-                        ) : sortedRows.length === 0 ? (
+                        {sortedRows.length === 0 ? (
                             <tr>
                                 <td className="list-page-table-empty" colSpan={7}>
                                     No records found

@@ -3,6 +3,8 @@ import '../styles/CompanyProfile.css';
 import fetchApi from '../utils/api.js';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 const CompanyProfile = ({ company, onBack, onPermissions, onChat, onEditUser, onDeleteUser }) => {
     const [users, setUsers] = useState([]);
@@ -109,7 +111,7 @@ const CompanyProfile = ({ company, onBack, onPermissions, onChat, onEditUser, on
                             </div>
                             <div className="panel-body">
                                 {loading ? (
-                                    <div className="panel-loading">Loading users...</div>
+                                    <PageSkeleton />
                                 ) : users.length > 0 ? (
                                     <div className="table-wrapper">
                                         <table className="panel-table">

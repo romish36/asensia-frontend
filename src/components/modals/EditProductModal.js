@@ -5,6 +5,7 @@ import API_BASE_URL from '../../config/apiConfig.js';
 
 
 const EditProductModal = ({ isOpen, onClose, product, isPage }) => {
+    const isInitialMount = React.useRef(true);
     const [formData, setFormData] = useState({
         companyId: '',
         categoryId: '',
@@ -34,6 +35,9 @@ const EditProductModal = ({ isOpen, onClose, product, isPage }) => {
 
 
     useEffect(() => {
+        if (!isInitialMount.current) return;
+        isInitialMount.current = false;
+
         const user = JSON.parse(sessionStorage.getItem('user'));
         if (user) {
             setUserRole(user.role);

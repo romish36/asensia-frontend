@@ -9,6 +9,8 @@ import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import AirDatePicker from '../components/ui/AirDatePicker';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 function OutStock() {
     const { hasPermission } = usePermissionContext();
@@ -340,6 +342,10 @@ function OutStock() {
         return out;
     }, [currentPage, totalPages]);
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             <div className="list-page-header">
@@ -436,7 +442,7 @@ function OutStock() {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? <tr><td colSpan="8">Loading...</td></tr> : sortedData.length > 0 ? (
+                        {sortedData.length > 0 ? (
                             sortedData.map((item, index) => (
                                 <tr key={item.id}>
                                     <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>

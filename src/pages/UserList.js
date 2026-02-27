@@ -7,6 +7,8 @@ import API_BASE_URL from '../config/apiConfig.js';
 import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 
 function UserList({ onAddUser, onEditUser, onPermissions, onChat }) {
@@ -123,6 +125,10 @@ function UserList({ onAddUser, onEditUser, onPermissions, onChat }) {
 
     const canManage = currentUserRole === 'SUPER_ADMIN' || currentUserRole === 'ADMIN';
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             {/* Header: Title and Action Buttons */}
@@ -170,11 +176,7 @@ function UserList({ onAddUser, onEditUser, onPermissions, onChat }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
-                            <tr>
-                                <td className="list-page-table-empty" colSpan={(canManage || onChat) ? (currentUserRole === 'SUPER_ADMIN' ? 9 : 8) : 7}>Loading users...</td>
-                            </tr>
-                        ) : rows.length > 0 ? (
+                        {rows.length > 0 ? (
                             rows.map((item) => (
                                 <tr key={item._id}>
                                     <td>{item.userName}</td>

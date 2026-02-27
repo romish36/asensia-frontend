@@ -6,6 +6,8 @@ import API_BASE_URL from '../config/apiConfig.js';
 import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 
 function CategoryList({ onAddCategory, onEditCategory }) {
@@ -252,6 +254,10 @@ function CategoryList({ onAddCategory, onEditCategory }) {
         }
     };
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             <div className="list-page-header">
@@ -317,7 +323,7 @@ function CategoryList({ onAddCategory, onEditCategory }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? <tr><td colSpan="4">Loading...</td></tr> : sortedRows.length === 0 ? (
+                        {sortedRows.length === 0 ? (
                             <tr><td colSpan="4">No records found</td></tr>
                         ) : (
                             sortedRows.map((r, index) => (

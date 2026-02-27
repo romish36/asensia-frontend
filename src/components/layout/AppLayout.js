@@ -39,7 +39,7 @@ export const SETTINGS_ITEMS = [
 ];
 
 function AppLayout({ children, activeKey, activeTitle, onNavSelect, onLogout }) {
-  const { hasPermission, company, loading } = usePermissionContext();
+  const { hasPermission, company, loading, appLoading } = usePermissionContext();
   const [unreadCount, setUnreadCount] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -48,6 +48,8 @@ function AppLayout({ children, activeKey, activeTitle, onNavSelect, onLogout }) 
     const token = sessionStorage.getItem('token');
     if (!token) return;
 
+    let isSubscribed = true;
+
     // Initial fetch
     const fetchUnread = async () => {
       try {
@@ -55,26 +57,41 @@ function AppLayout({ children, activeKey, activeTitle, onNavSelect, onLogout }) 
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
-        setUnreadCount(data.count);
+        if (isSubscribed) {
+          setUnreadCount(data.count);
+        }
       } catch (err) {
-        console.error('Error fetching unread count:', err);
+        // console.error('Error fetching unread count:', err);
       }
     };
     fetchUnread();
 
     // Socket for real-time updates
-    const socket = io(SOCKET_URL);
-    socket.emit('identify', token);
+    const socket = io(SOCKET_URL, {
+      transports: ["websocket"],
+      upgrade: false
+    });
+
+    socket.on('connect', () => {
+      socket.emit('identify', token);
+    });
 
     socket.on('unreadUpdate', () => {
-      setUnreadCount(prev => prev + 1);
+      if (isSubscribed) {
+        setUnreadCount(prev => prev + 1);
+      }
     });
 
     socket.on('unreadCleared', () => {
       fetchUnread();
     });
 
-    return () => socket.disconnect();
+    return () => {
+      isSubscribed = false;
+      socket.off('unreadUpdate');
+      socket.off('unreadCleared');
+      socket.disconnect();
+    };
   }, []);
 
   const filteredItems = useMemo(() => {

@@ -6,6 +6,8 @@ import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import AirDatePicker from '../components/ui/AirDatePicker';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 function ExpensesList({ onAddExpenses, onEditExpenses }) {
     const { hasPermission } = usePermissionContext();
@@ -136,6 +138,10 @@ function ExpensesList({ onAddExpenses, onEditExpenses }) {
         for (let i = start; i <= end; i += 1) out.push(i);
         return out;
     }, [currentPage, totalPages]);
+
+    if (loading) {
+        return <PageSkeleton />;
+    }
 
     return (
         <div className="expenses-list-container">

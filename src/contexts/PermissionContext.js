@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../config/apiConfig';
 
@@ -7,7 +7,9 @@ const PermissionContext = createContext();
 export const PermissionProvider = ({ children }) => {
     const [permissions, setPermissions] = useState({});
     const [company, setCompany] = useState(null);
+    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [appLoading, setAppLoading] = useState(false);
 
     const fetchMyPermissions = async () => {
         try {
@@ -67,22 +69,57 @@ export const PermissionProvider = ({ children }) => {
         }
     };
 
+    const fetchCategories = async () => {
+        try {
+            const token = sessionStorage.getItem('token');
+            if (!token) return;
+            const res = await axios.get(`${API_BASE_URL}/category`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            if (res.data) setCategories(res.data);
+        } catch (err) {
+            console.error("Error fetching categories:", err);
+        }
+    };
+
     useEffect(() => {
-        fetchMyPermissions();
+        const init = async () => {
+            await fetchMyPermissions();
+            await fetchCategories();
+        };
+        init();
     }, []);
 
     // Function to check if a user has a specific permission
-    const hasPermission = (moduleName, action) => {
+    const hasPermission = useCallback((moduleName, action) => {
         if (permissions.isSuperAdmin) return true;
 
         const modulePerms = permissions[moduleName];
         if (!modulePerms) return false;
 
         return modulePerms[action] === 1;
-    };
+    }, [permissions]);
+
+    const contextValue = useMemo(() => ({
+        permissions,
+        company,
+        categories,
+        hasPermission,
+        fetchMyPermissions,
+        fetchCategories,
+        loading,
+        appLoading,
+        setAppLoading
+    }), [permissions, company, categories, hasPermission, loading, appLoading]);
 
     return (
-        <PermissionContext.Provider value={{ permissions, company, hasPermission, fetchMyPermissions, loading }}>
+        <PermissionContext.Provider value={contextValue}>
+            {(loading || appLoading) && (
+                <div className="loading-overlay">
+                    <div className="loading-spinner"></div>
+                    <div className="loading-text">Please wait...</div>
+                </div>
+            )}
             {children}
         </PermissionContext.Provider>
     );

@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import fetchApi from '../utils/api.js';
 import { usePermissionContext } from '../contexts/PermissionContext.js';
 import SearchBar from '../components/ui/SearchBar';
+import PageSkeleton from '../components/ui/PageSkeleton';
+
 
 
 function InvoiceNameList({ onAdd, onEdit }) {
@@ -108,6 +110,10 @@ function InvoiceNameList({ onAdd, onEdit }) {
         if (onAdd) onAdd();
     };
 
+    if (loading) {
+        return <PageSkeleton />;
+    }
+
     return (
         <div className="list-page-container">
             {/* Header: Title and Action Buttons */}
@@ -148,9 +154,7 @@ function InvoiceNameList({ onAdd, onEdit }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
-                            <tr><td colSpan={isSuperAdmin ? 3 : 2} className="list-page-table-empty">Loading...</td></tr>
-                        ) : pagedRows.length === 0 ? (
+                        {pagedRows.length === 0 ? (
                             <tr>
                                 <td className="list-page-table-empty" colSpan={isSuperAdmin ? 3 : 2}>
                                     No records found
