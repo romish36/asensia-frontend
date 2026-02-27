@@ -4,7 +4,7 @@ import AddPaymentModal from '../components/modals/AddPaymentModal';
 import AccountStatement from './AccountStatement';
 import fetchApi from '../utils/api.js';
 import Swal from 'sweetalert2';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
 
 const TransporterProfile = ({ transporter, onBack, onPreviewInvoice, onEdit }) => {
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
