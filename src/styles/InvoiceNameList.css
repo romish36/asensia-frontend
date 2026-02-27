@@ -1,0 +1,163 @@
+/* Invoice Name List Page Styles */
+.invoice-name-list-container {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: calc(100vh - 140px);
+}
+
+.invoice-name-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 24px;
+}
+
+/* Add Button */
+.invoice-name-add-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+.invoice-name-btn-add {
+    background-color: #0f344d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0 20px;
+    height: 38px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Controls */
+.invoice-name-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #555;
+}
+
+.invoice-name-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.invoice-name-search input {
+    height: 32px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 0 8px;
+    min-width: 200px;
+}
+
+/* Table */
+.invoice-name-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.invoice-name-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.invoice-name-table thead th {
+    background-color: #dff5e8;
+    color: #000;
+    text-align: left;
+    padding: 8px 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.invoice-name-table tbody td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #333;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.invoice-name-table tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Icons */
+.invoice-name-icon-btn {
+    background: #f3f4f6;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    margin: 0 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    width: 32px;
+    height: 32px;
+}
+
+.invoice-name-icon-btn:hover {
+    background: #e5e7eb;
+}
+
+.invoice-name-icon-edit {
+    color: #6366f1;
+    /* Indigo/Purple color */
+}
+
+.invoice-name-icon-delete {
+    color: #ef4444;
+    /* Red color */
+}
+
+.invoice-name-icon-svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+}
+
+/* Pagination */
+.invoice-name-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #666;
+}
+
+.invoice-name-page-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.invoice-name-page-btn {
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.invoice-name-page-btn.active {
+    background: #e5e7eb;
+    font-weight: 600;
+}
+
+.invoice-name-page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

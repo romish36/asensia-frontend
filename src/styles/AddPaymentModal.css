@@ -1,0 +1,182 @@
+.payment-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.payment-modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 600px;
+    max-width: 90%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.payment-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #64748b;
+    transition: color 0.2s;
+}
+
+.payment-modal-close:hover {
+    color: #111;
+}
+
+.payment-modal-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 30px;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    text-decoration-color: #111;
+}
+
+.payment-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.payment-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.payment-form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.payment-form-group.half-width {
+    grid-column: span 1;
+    /* Actually span 1 in 3-col grid is 1/3, but for 2 items in row we might need adjustment or just use flex inside row */
+}
+
+/* Adjust grid for specific rows */
+.payment-row-1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.payment-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.payment-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+}
+
+.payment-input,
+.payment-select,
+.payment-textarea {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.payment-input:focus,
+.payment-select:focus,
+.payment-textarea:focus {
+    border-color: #7c3aed;
+    /* Purple tint from screenshot border */
+    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.1);
+}
+
+.payment-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.payment-file-input-wrapper {
+    display: flex;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    overflow: hidden;
+    height: 42px;
+    /* Match input height */
+}
+
+.payment-file-label {
+    background-color: #f8fafc;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    color: #64748b;
+    border-right: 1px solid #cbd5e1;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.payment-file-text {
+    flex: 1;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    color: #94a3b8;
+    background: white;
+}
+
+.payment-modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.payment-btn-submit {
+    background-color: #0f344d;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.payment-btn-cancel {
+    background-color: #e2e8f0;
+    color: #64748b;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.payment-btn-submit:hover {
+    background-color: #092336;
+}
+
+.payment-btn-cancel:hover {
+    background-color: #cbd5e1;
+}

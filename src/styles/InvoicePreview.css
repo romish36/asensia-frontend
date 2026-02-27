@@ -1,0 +1,536 @@
+.inv-preview-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f7fc;
+    min-height: 100vh;
+}
+
+.inv-preview-main {
+    flex: 1;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 1000px;
+    /* A4ish width */
+}
+
+.inv-top-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.inv-control-btn {
+    background-color: #0d3850;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.inv-control-btn:hover {
+    background-color: #0b2e42;
+}
+
+/* Invoice Paper Styles */
+.invoice-box {
+    border: 1px solid #333;
+    font-size: 10px;
+    /* Small text as per screenshot */
+    color: #000;
+    line-height: 1.3;
+}
+
+.invoice-header-row {
+    display: flex;
+    border-bottom: 1px solid #333;
+}
+
+.invoice-header-left {
+    flex: 1;
+    border-right: 1px solid #333;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.invoice-header-center {
+    flex: 2;
+    text-align: center;
+    padding: 5px;
+    font-weight: bold;
+    border-right: 1px solid #333;
+}
+
+.invoice-header-right {
+    flex: 1;
+    text-align: right;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.header-image-container {
+    text-align: center;
+    border-bottom: 1px solid #333;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.header-image-placeholder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.asencia_header {
+    max-width: 100%;
+    max-height: 120px;
+    object-fit: contain;
+    display: block;
+}
+
+/* Address Section */
+.invoice-addresses {
+    display: flex;
+    border-bottom: 1px solid #333;
+}
+
+.address-block {
+    flex: 1;
+    padding: 5px;
+}
+
+.address-block:first-child {
+    border-right: 1px solid #333;
+}
+
+.address-title {
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 5px;
+    padding-bottom: 2px;
+}
+
+.address-content p {
+    margin: 2px 0;
+}
+
+/* Invoice Meta & Transporter */
+.invoice-meta-row {
+    display: flex;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+.invoice-meta-left {
+    width: 60%;
+    /* Invoice No, Date, etc wide column */
+    border-right: 1px solid #333;
+    background-color: #ffffff;
+    /* Grey background as per screenshot */
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.invoice-meta-left .meta-line {
+    display: flex;
+    margin-bottom: 2px;
+}
+
+.invoice-meta-left .meta-label {
+    width: 120px;
+    font-weight: bold;
+}
+
+.invoice-meta-right {
+    width: 40%;
+    padding: 5px;
+}
+
+.invoice-meta-right .meta-line {
+    display: flex;
+    margin-bottom: 2px;
+}
+
+.invoice-meta-right .meta-label {
+    width: 120px;
+    font-weight: bold;
+}
+
+/* Table */
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.invoice-table th,
+.invoice-table td {
+    border-right: 1px solid #333;
+    padding: 5px;
+    text-align: center;
+    vertical-align: top;
+}
+
+.invoice-table th:last-child,
+.invoice-table td:last-child {
+    border-right: none;
+}
+
+.invoice-table th {
+    border-bottom: 1px solid #333;
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+.invoice-table td {
+    /* To make vertical lines continuous, we might need min-height or height on the rows/cells */
+    height: 200px;
+    /* Fixed height for the main body */
+}
+
+/* Use a different approach for the table to match the invoice look cleanly */
+/* Grid based table might be better for the vertical lines continuity */
+.invoice-body-grid {
+    display: grid;
+    grid-template-columns: 40px 1fr 100px 60px 60px 60px 50px 80px 100px;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+.grid-header {
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-col {
+    border-right: 1px solid #333;
+    position: relative;
+}
+
+.grid-col:last-child,
+.grid-header:last-child {
+    border-right: none;
+}
+
+.grid-cell {
+    padding: 5px;
+    text-align: center;
+}
+
+.grid-row {
+    display: contents;
+    /* Allows children to be grid items */
+}
+
+/* Style strictly for the layout container of content */
+.invoice-content-container {
+    min-height: 400px;
+}
+
+/* Footer Section */
+.footer-row {
+    display: flex;
+    border-bottom: 1px solid #333;
+}
+
+.footer-row.no-border {
+    border-bottom: none;
+}
+
+.footer-col-left {
+    flex: 1;
+    /* Occupies more space */
+    border-right: 1px solid #333;
+}
+
+.footer-col-right {
+    width: 300px;
+}
+
+.total-row {
+    display: flex;
+    font-weight: bold;
+    border-bottom: 1px solid #333;
+}
+
+.total-label {
+    flex: 1;
+    padding: 5px;
+    border-right: 1px solid #333;
+}
+
+.total-qty {
+    width: 60px;
+    /* matches grid */
+    padding: 5px;
+    text-align: center;
+    border-right: 1px solid #333;
+}
+
+.total-amt {
+    width: 100px;
+    /* matches grid */
+    padding: 5px;
+    text-align: right;
+}
+
+/* Bank Details Styling */
+.bank-details-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.bank-details-table td {
+    padding: 2px 5px;
+    border-bottom: 1px solid #ccc;
+    font-size: 10px;
+}
+
+.bank-details-table tr:last-child td {
+    border-bottom: none;
+}
+
+.amount-words-row {
+    border-bottom: 1px solid #333;
+    padding: 5px;
+    font-weight: bold;
+    display: flex;
+}
+
+.remark-row {
+    border-bottom: 1px solid #333;
+    padding: 5px;
+    min-height: 20px;
+}
+
+.summary-table {
+    width: 100%;
+}
+
+.summary-table td {
+    padding: 5px;
+    border-bottom: 1px solid #333;
+}
+
+.summary-table tr:last-child td {
+    border-bottom: none;
+}
+
+.terms-signature-row {
+    display: flex;
+    min-height: 120px;
+}
+
+.terms-col {
+    flex: 1;
+    padding: 5px;
+    font-size: 9px;
+    border-right: 1px solid #333;
+}
+
+.signature-col {
+    width: 300px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.auth-sign-img {
+    max-height: 80px;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    /* Makes white background transparent */
+}
+
+/* Sidebar */
+.inv-sidebar {
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-btn {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 12px;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #333;
+    font-weight: 500;
+}
+
+.sidebar-btn:hover {
+    background-color: #d0d0d0;
+}
+
+.sidebar-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.sidebar-btn-whatsapp {
+    background-color: #25d366;
+    color: white;
+}
+
+
+.sidebar-btn-whatsapp:hover {
+    background-color: #20bd5a;
+}
+
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 5mm;
+    }
+
+    body {
+        visibility: hidden;
+    }
+
+    /* Show only our preview container */
+    .inv-preview-container {
+        visibility: visible;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        z-index: 99999;
+        display: block !important;
+        overflow: visible !important;
+        height: auto !important;
+    }
+
+    /* Ensure children are visible */
+    .inv-preview-container * {
+        visibility: visible;
+    }
+
+    /* Explicitly hide the controls within the container */
+    .inv-sidebar,
+    .inv-top-controls,
+    .inv-control-btn,
+    .sidebar-btn,
+    .modal-overlay {
+        display: none !important;
+    }
+
+    .inv-preview-main {
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: none !important;
+        border: none !important;
+        overflow: visible !important;
+    }
+
+    /* Adjust the box to fill the page - NO SCALING */
+    .invoice-box {
+        width: 100% !important;
+        border: 1px solid #333 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        page-break-after: avoid;
+        page-break-before: avoid;
+    }
+
+    /* Reset all heights and paddings */
+    .invoice-meta-row {
+        border-top: 1px solid #333 !important;
+        border-bottom: 1px solid #333 !important;
+    }
+
+    .invoice-body-grid,
+    .invoice-header-row,
+    .invoice-addresses,
+    .footer-row {
+        min-height: auto !important;
+        height: auto !important;
+        overflow: visible !important;
+        border-bottom: 1px solid #333 !important;
+    }
+
+    .invoice-content-container {
+        min-height: 300px !important;
+        display: flex !important;
+        border-bottom: none !important;
+    }
+
+    /* Proper padding for sections - Match screen (5px) */
+    .address-block,
+    .invoice-header-left,
+    .invoice-header-center,
+    .invoice-header-right,
+    .invoice-meta-left,
+    .invoice-meta-right,
+    .grid-header,
+    .grid-cell,
+    .invoice-table td,
+    .invoice-table th,
+    .footer-col-left,
+    .footer-col-right,
+    .terms-col,
+    .signature-col,
+    .total-label,
+    .total-qty,
+    .total-amt,
+    .amount-words-row,
+    .summary-table td,
+    .header-image-container {
+        padding: 5px !important;
+    }
+
+    .remark-row {
+        padding: 5px !important;
+        min-height: 20px !important;
+    }
+
+    .terms-signature-row {
+        min-height: 100px !important;
+    }
+
+    .header-image-container {
+        padding: 8px !important;
+    }
+
+    .asencia_header {
+        max-height: 100px !important;
+    }
+
+    /* Ensure colors print exact */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Prevent page breaks */
+    .invoice-box>div {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}

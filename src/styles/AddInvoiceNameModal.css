@@ -1,0 +1,118 @@
+/* Add Invoice Name Modal Styles */
+.add-invoicename-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.add-invoicename-modal {
+    width: min(600px, 100%);
+    background: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.add-invoicename-close-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #f3f4f6;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    font-size: 18px;
+    color: #555;
+    transition: background 0.2s;
+}
+
+.add-invoicename-close-icon:hover {
+    background: #e5e7eb;
+}
+
+.add-invoicename-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 30px;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    margin-top: 0;
+}
+
+.add-invoicename-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.add-invoicename-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.add-invoicename-input {
+    height: 40px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0 12px;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    color: #333;
+    background: #fff;
+}
+
+.add-invoicename-input::placeholder {
+    color: #9ca3af;
+}
+
+.add-invoicename-input:focus {
+    border-color: #94a3b8;
+}
+
+.add-invoicename-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.add-invoicename-btn-submit {
+    height: 40px;
+    padding: 0 30px;
+    border-radius: 6px;
+    border: none;
+    background: #0f344d;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.add-invoicename-btn-cancel {
+    height: 40px;
+    padding: 0 30px;
+    border-radius: 6px;
+    border: none;
+    background: #e5e7eb;
+    color: #666;
+    font-weight: 700;
+    cursor: pointer;
+    min-width: 100px;
+}

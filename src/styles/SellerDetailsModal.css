@@ -1,0 +1,93 @@
+/* SellerDetailsModal.css */
+.sd-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.sd-modal {
+    background-color: #fff;
+    width: 500px;
+    max-width: 90%;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+}
+
+.sd-modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sd-modal-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+    text-transform: uppercase;
+    border-bottom: 2px solid #333;
+    padding-bottom: 2px;
+    display: inline-block;
+}
+
+.sd-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+}
+
+.sd-modal-close:hover {
+    color: #333;
+}
+
+.sd-modal-body {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.sd-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.sd-detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px dashed #ccc;
+    font-size: 14px;
+    color: #555;
+}
+
+.sd-detail-item:last-child {
+    border-bottom: none;
+}
+
+.sd-detail-label {
+    font-weight: 700;
+    color: #666;
+    flex-shrink: 0;
+    margin-right: 15px;
+}
+
+.sd-detail-value {
+    font-weight: 500;
+    color: #111;
+    text-align: right;
+    word-break: break-word;
+}

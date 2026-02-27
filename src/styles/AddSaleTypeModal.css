@@ -1,0 +1,131 @@
+/* Add Sale Type Modal Styles */
+.add-saletype-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    z-index: 1000;
+}
+
+.add-saletype-modal {
+    width: min(800px, 100%);
+    max-height: 92vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    position: relative;
+    padding: 30px;
+}
+
+.add-saletype-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-saletype-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 30px;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+}
+
+.add-saletype-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.add-saletype-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.add-saletype-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.add-saletype-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+}
+
+.add-saletype-input {
+    height: 40px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0 12px;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.add-saletype-input:focus {
+    border-color: #94a3b8;
+}
+
+.add-saletype-helper-text {
+    color: #ff4d4f;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+/* Action Buttons */
+.add-saletype-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.add-saletype-btn-submit {
+    height: 40px;
+    padding: 0 30px;
+    border-radius: 6px;
+    border: none;
+    background: #0f344d;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.add-saletype-btn-cancel {
+    height: 40px;
+    padding: 0 30px;
+    border-radius: 6px;
+    border: none;
+    background: #e5e7eb;
+    color: #6b7280;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .add-saletype-row {
+        flex-direction: column;
+    }
+}

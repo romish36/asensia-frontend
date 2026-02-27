@@ -1,0 +1,399 @@
+/* Transporter List Page Styles */
+.transporter-list-container {
+    background: #fff;
+    border-radius: 8px;
+    padding: 8px;
+    min-height: calc(100vh - 140px);
+}
+
+.transporter-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 8px;
+}
+
+/* Filter Section */
+.transporter-filter-section {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.transporter-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.transporter-filter-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+}
+
+.transporter-filter-select {
+    height: 38px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0 8px;
+    min-width: 150px;
+    font-size: 14px;
+}
+
+.transporter-btn-submit {
+    background-color: #0f344d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    height: 38px;
+    padding: 0 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.transporter-btn-reset {
+    background-color: #0f344d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    height: 38px;
+    padding: 0 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Add Transporter Button */
+.transporter-add-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+}
+
+.transporter-btn-add {
+    background-color: #0f344d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Action Buttons */
+.transporter-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.transporter-btn-excel {
+    background-color: #22c55e;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.transporter-btn-print {
+    background-color: #06b6d4;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Table Controls */
+.transporter-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.transporter-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.transporter-search input {
+    height: 32px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 0 8px;
+    min-width: 150px;
+}
+
+/* Table */
+.transporter-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.transporter-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.transporter-table thead th {
+    background-color: #dff5e8;
+    color: #000;
+    text-align: left;
+    padding: 8px 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.transporter-table tbody td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #333;
+    font-size: 14px;
+}
+
+.transporter-table tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.transporter-name-link {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.transporter-name-link:hover {
+    text-decoration: underline;
+}
+
+/* Action Icons */
+.transporter-action-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.transporter-icon-btn {
+    background: #f3f4f6;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    width: 32px;
+    height: 32px;
+}
+
+.transporter-icon-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.transporter-icon-btn:hover {
+    background: #e5e7eb;
+}
+
+.transporter-icon-view {
+    color: #3b82f6;
+    /* Blue for view */
+}
+
+.transporter-icon-edit {
+    color: #6366f1;
+    /* Purple/Indigo for edit */
+}
+
+.transporter-icon-delete {
+    color: #ef4444;
+    /* Red for delete */
+}
+
+/* Pagination */
+.transporter-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #666;
+}
+
+.transporter-page-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.transporter-page-btn {
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.transporter-page-btn.active {
+    background: #e5e7eb;
+    font-weight: 600;
+}
+
+.transporter-page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+@media screen {
+    .print-only {
+        display: none !important;
+    }
+}
+
+/* Printable Table Hidden by Default */
+.printable-transporter-table {
+    display: none;
+}
+
+@media print {
+    @page {
+        size: A4 landscape;
+        margin: 10mm;
+    }
+
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    .transporter-list-container,
+    .transporter-list-container * {
+        visibility: visible;
+    }
+
+    .transporter-list-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background: white;
+    }
+
+    .transporter-title,
+    .transporter-filter-section,
+    .transporter-add-section,
+    .transporter-actions,
+    .transporter-controls,
+    .transporter-pagination,
+    .app-shell__sidebar,
+    .app-shell__header,
+    .app-shell__footer {
+        display: none !important;
+    }
+
+    /* Hide normal paginated table */
+    .transporter-table-wrapper {
+        display: none !important;
+    }
+
+    /* Show the printable table which has all items */
+    .printable-transporter-table {
+        display: block !important;
+        position: relative;
+        width: 100%;
+        visibility: visible !important;
+    }
+
+    .printable-transporter-table table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-size: 11px;
+        table-layout: auto;
+        color: #000;
+    }
+
+    .printable-transporter-table th {
+        border-bottom: 2px solid #333;
+        border-top: 1px solid #333;
+        padding: 8px 4px;
+        text-align: left;
+        white-space: nowrap;
+        background-color: #fff !important;
+    }
+
+    .printable-transporter-table td {
+        padding: 6px 4px;
+        border-bottom: 1px solid #ccc;
+        vertical-align: top;
+    }
+
+    .transporter-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        color: #000;
+        table-layout: auto;
+    }
+
+    .transporter-table thead th {
+        background-color: #fff !important;
+        color: #000;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-bottom: 2px solid #333;
+        border-top: 1px solid #333;
+        padding: 10px 8px;
+        text-align: left;
+        white-space: nowrap;
+        font-size: 11px;
+    }
+
+    .transporter-table tbody td {
+        padding: 10px 8px;
+        border-bottom: 1px solid #eee;
+        color: #000;
+        vertical-align: top;
+    }
+
+    /* Subtle Zebra Striping */
+    .transporter-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9 !important;
+    }
+
+    /* Clean borders */
+    .transporter-table th,
+    .transporter-table td {
+        border-left: none;
+        border-right: none;
+    }
+
+    /* Column Visibility */
+    .screen-only {
+        display: none !important;
+    }
+
+    .print-only {
+        display: table-cell !important;
+    }
+}

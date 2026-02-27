@@ -1,0 +1,83 @@
+/* ExpensesPurposeForm.css */
+
+.expenses-purpose-form-body {
+    padding: 24px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.expenses-purpose-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.expenses-purpose-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.expenses-purpose-field label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.expenses-purpose-field input[type="text"] {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.expenses-purpose-field input:focus {
+    border-color: #0b3a54;
+    box-shadow: 0 0 0 2px rgba(11, 58, 84, 0.1);
+}
+
+.expenses-purpose-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.btn-submit {
+    background-color: #0b3a54;
+    color: #fff;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: #0f4c6e;
+}
+
+.btn-cancel {
+    background-color: #ffeff0;
+    color: #ef4444;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.2s;
+}
+
+.btn-cancel:hover {
+    background-color: #fee2e2;
+}

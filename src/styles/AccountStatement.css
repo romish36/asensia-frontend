@@ -1,0 +1,103 @@
+.account-statement-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #000;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+}
+
+.as-header-box {
+    border: 1px solid #000;
+    border-bottom: none;
+}
+
+.as-header-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #000;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.as-address-row {
+    border-bottom: 1px solid #000;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.as-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #000;
+    font-size: 12px;
+}
+
+.as-table th,
+.as-table td {
+    border: 1px solid #000;
+    padding: 5px;
+    vertical-align: top;
+}
+
+.as-table th {
+    text-align: center;
+    background-color: #fff;
+    /* Screenshot looks white or very light grey */
+    font-weight: bold;
+    padding: 8px 5px;
+}
+
+.as-col-sr {
+    width: 50px;
+    text-align: center;
+}
+
+.as-col-date {
+    width: 100px;
+}
+
+.as-col-narration {
+    text-align: left;
+}
+
+.as-col-amount {
+    width: 120px;
+    text-align: right;
+}
+
+.narration-content {
+    white-space: pre-line;
+    line-height: 1.4;
+}
+
+.as-total-row td {
+    font-weight: bold;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .account-statement-container,
+    .account-statement-container * {
+        visibility: visible;
+    }
+
+    .account-statement-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+}

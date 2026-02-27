@@ -1,0 +1,218 @@
+/* User List Page Styles */
+.user-list-container {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: calc(100vh - 140px);
+}
+
+.user-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 24px;
+}
+
+/* Add User Button */
+.user-add-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+.user-btn-add {
+    background-color: #0f344d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0 20px;
+    height: 38px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Controls */
+.user-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #555;
+}
+
+.user-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-search input {
+    height: 32px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 0 8px;
+    min-width: 200px;
+}
+
+/* Table */
+.user-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.user-table thead th {
+    background-color: #dff5e8;
+    color: #000;
+    text-align: left;
+    padding: 8px 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.user-table tbody td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #333;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.user-table tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Status Badge */
+.user-status-active {
+    background-color: #f97316;
+    /* Orange color from screenshot */
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* Permissions Link */
+.user-permissions-link {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.user-permissions-link:hover {
+    text-decoration: underline;
+}
+
+/* Profile Image */
+.user-profile-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ddd;
+    border: 2px solid #fff;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Action Icons */
+.user-action-icons {
+    display: flex;
+    gap: 12px;
+    /* Slightly wider gap since fewer icons */
+    align-items: center;
+}
+
+.user-icon-btn {
+    background: #f3f4f6;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    margin: 0 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    width: 32px;
+    height: 32px;
+}
+
+.user-icon-btn:hover {
+    background: #e5e7eb;
+}
+
+.user-icon-edit {
+    color: #6366f1;
+    /* Indigo/Purple color */
+}
+
+.user-icon-delete {
+    color: #ef4444;
+    /* Red color */
+}
+
+.user-icon-svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+}
+
+/* Pagination */
+.user-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #666;
+}
+
+.user-page-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.user-page-btn {
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.user-page-btn.active {
+    background: #e5e7eb;
+    font-weight: 600;
+}
+
+.user-page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .user-controls {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .user-search input {
+        width: 100%;
+    }
+}

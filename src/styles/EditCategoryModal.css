@@ -1,0 +1,113 @@
+/* Styling specifically for EditCategoryModal, reusing some concepts but independent */
+.edit-category-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Center Vertically */
+    padding: 20px;
+    z-index: 1000;
+}
+
+.edit-category-modal {
+    background: #fff;
+    width: 500px;
+    max-width: 95%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.edit-category-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-category-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+}
+
+.edit-category-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.edit-category-body {
+    padding: 20px;
+}
+
+.edit-category-form-group {
+    margin-bottom: 20px;
+}
+
+.edit-category-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 8px;
+}
+
+.edit-category-input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    /* Slightly rounded like screenshot */
+    padding: 0 12px;
+    font-size: 14px;
+    box-sizing: border-box;
+    color: #333;
+}
+
+.edit-category-input:focus {
+    border-color: #666;
+    outline: none;
+}
+
+.edit-category-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.btn-category-update {
+    background-color: #0d3850;
+    /* Dark Blue */
+    color: #fff;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-category-cancel {
+    background-color: #ffdce0;
+    /* Light Pink */
+    color: #ff3b3b;
+    /* Red Text */
+    border: none;
+    padding: 10px 25px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}

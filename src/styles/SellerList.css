@@ -1,0 +1,372 @@
+/* Seller List Page Styles */
+.seller-list-container {
+    background: #fff;
+    border-radius: 8px;
+    padding: 8px;
+    min-height: calc(100vh - 140px);
+}
+
+.seller-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 8px;
+}
+
+/* Filter Section */
+.seller-filter-section {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.seller-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.seller-filter-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+}
+
+.seller-filter-select {
+    height: 38px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0 8px;
+    min-width: 150px;
+    font-size: 14px;
+}
+
+.seller-btn-submit {
+    background-color: #0f344d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    height: 38px;
+    padding: 0 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.seller-btn-reset {
+    background-color: #0f344d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    height: 38px;
+    padding: 0 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Add Seller Button */
+.seller-add-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+}
+
+.seller-btn-add {
+    background-color: #0f344d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Action Buttons */
+.seller-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.seller-btn-excel {
+    background-color: #22c55e;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.seller-btn-print {
+    background-color: #06b6d4;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Table Controls */
+.seller-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.seller-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.seller-search input {
+    height: 32px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 0 8px;
+    min-width: 150px;
+}
+
+/* Table */
+.seller-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.seller-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.seller-table thead th {
+    background-color: #dff5e8;
+    /* Light Green */
+    color: #000;
+    text-align: left;
+    padding: 8px 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.seller-table tbody td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #333;
+    font-size: 14px;
+}
+
+.seller-table tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Action Icons */
+.seller-action-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.seller-icon-btn {
+    background: #f3f4f6;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    width: 32px;
+    height: 32px;
+}
+
+.seller-icon-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.seller-icon-btn:hover {
+    background: #e5e7eb;
+}
+
+.seller-icon-view {
+    color: #3b82f6;
+    /* Blue for view */
+}
+
+.seller-icon-edit {
+    color: #6366f1;
+    /* Purple/Indigo for edit */
+}
+
+.seller-icon-delete {
+    color: #ef4444;
+    /* Red for delete */
+}
+
+/* Pagination */
+.seller-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #666;
+}
+
+.seller-page-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.seller-page-btn {
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.seller-page-btn.active {
+    background: #e5e7eb;
+    font-weight: 600;
+}
+
+.seller-page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media screen {
+    .print-only {
+        display: none !important;
+    }
+}
+
+/* Printable Table Hidden by Default */
+.printable-seller-table {
+    display: none;
+}
+
+@media print {
+    @page {
+        size: A4 landscape;
+        margin: 5mm;
+    }
+
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    .seller-list-container,
+    .seller-list-container * {
+        visibility: visible;
+    }
+
+    .seller-list-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background: white;
+    }
+
+    .seller-title,
+    .seller-filter-section,
+    .seller-add-section,
+    .seller-actions,
+    .seller-controls,
+    .seller-pagination,
+    .app-shell__sidebar,
+    .app-shell__header,
+    .app-shell__footer {
+        display: none !important;
+    }
+
+    /* Hide the normal paginated table */
+    .seller-table-wrapper {
+        display: none !important;
+    }
+
+    /* Show the printable table which has all items */
+    .printable-seller-table {
+        display: block !important;
+        position: relative;
+        width: 100%;
+        visibility: visible !important;
+    }
+
+    .printable-seller-table table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-size: 10px;
+        table-layout: auto;
+        color: #000;
+    }
+
+    .seller-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-size: 10px;
+        /* Increased from 8px for clarity */
+        table-layout: auto;
+        color: #000;
+    }
+
+    .seller-table thead th {
+        background-color: #f3f4f6 !important;
+        /* Light grey header background */
+        color: #000;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-bottom: 2px solid #000;
+        /* Darker border */
+        padding: 8px 4px;
+        /* More padding */
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .seller-table tbody td {
+        padding: 6px 4px;
+        /* More padding */
+        border-bottom: 1px solid #ccc;
+        color: #000;
+        vertical-align: top;
+        word-wrap: break-word;
+        /* Allow content to wrap */
+    }
+
+    /* Zebra Striping for Print */
+    .seller-table tbody tr:nth-child(even) {
+        background-color: #f9fafb !important;
+    }
+
+    /* Column Visibility */
+    .screen-only {
+        display: none !important;
+    }
+
+    .print-only {
+        display: table-cell !important;
+    }
+}

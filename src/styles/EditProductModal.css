@@ -1,0 +1,159 @@
+/* Reuse AddProductModal styles or define new ones for Edit */
+/* We will reuse mostly but define a specific class for the modal if needed */
+.edit-product-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Center vertically for edit modal typically, or flex-start if long */
+    padding: 20px;
+    z-index: 1000;
+}
+
+.edit-product-modal {
+    background: #fff;
+    width: 900px;
+    /* Wider for 3 columns */
+    max-width: 95%;
+    max-height: 90vh;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.edit-product-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-product-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+}
+
+.edit-product-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.edit-product-body {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* 3 Column Grid Layout */
+.edit-form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.edit-form-group {
+    margin-bottom: 0;
+    /* Reset margin since we use gap */
+}
+
+.edit-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 5px;
+}
+
+.edit-input,
+.edit-select {
+    width: 100%;
+    height: 38px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.edit-input:focus,
+.edit-select:focus {
+    border-color: #666;
+    outline: none;
+}
+
+/* File Input Wrapper to match Look */
+.edit-file-wrapper {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    height: 38px;
+    align-items: center;
+}
+
+.edit-file-btn {
+    background: #f9f9f9;
+    border-right: 1px solid #ccc;
+    padding: 0 15px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+}
+
+.edit-file-text {
+    padding: 0 10px;
+    font-size: 13px;
+    color: #555;
+    flex-grow: 1;
+}
+
+.edit-actions {
+    grid-column: 1 / -1;
+    /* Span full width */
+    display: flex;
+    justify-content: center;
+    /* Center buttons */
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-update {
+    background-color: #0d3850;
+    /* Dark Blue */
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background-color: #ffdce0;
+    /* Light Pink */
+    color: #ff3b3b;
+    /* Red Text */
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+}

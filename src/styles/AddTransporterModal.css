@@ -1,0 +1,222 @@
+/* Add Transporter Modal Styles */
+.add-transporter-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    z-index: 1000;
+}
+
+.add-transporter-modal {
+    width: min(1200px, 100%);
+    max-height: 92vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+.add-transporter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid #eef2f7;
+}
+
+.add-transporter-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+}
+
+.add-transporter-close {
+    height: 34px;
+    width: 34px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+}
+
+.add-transporter-form {
+    padding: 20px;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.add-transporter-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.add-transporter-row-6 {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.add-transporter-row-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+/* For the PAN and Type row which has 2 items */
+.add-transporter-row-2 {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    /* Use same grid as row-6 but only fill 2 */
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.add-transporter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.add-transporter-field-with-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.add-transporter-input-group {
+    display: flex;
+    gap: 8px;
+}
+
+.add-transporter-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+}
+
+.add-transporter-input {
+    height: 38px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0 10px;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.add-transporter-input:focus {
+    border-color: #94a3b8;
+}
+
+.add-transporter-select {
+    height: 38px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0 10px;
+    font-size: 14px;
+    outline: none;
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.add-transporter-textarea {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+    resize: vertical;
+    min-height: 80px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.add-transporter-btn-other {
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 6px;
+    border: 1px solid #a5b4fc;
+    background: #fff;
+    color: #4f46e5;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.add-transporter-btn-verify {
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 6px;
+    border: none;
+    background: #0f344d;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.add-transporter-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.add-transporter-btn-submit {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: 6px;
+    border: none;
+    background: #0f344d;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.add-transporter-btn-reset {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background: #6b7280;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.add-transporter-field-full {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 1024px) {
+
+    .add-transporter-row,
+    .add-transporter-row-6 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+
+    .add-transporter-row,
+    .add-transporter-row-6,
+    .add-transporter-row-2 {
+        grid-template-columns: 1fr;
+    }
+}

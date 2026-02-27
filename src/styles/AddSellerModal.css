@@ -1,0 +1,231 @@
+/* Add Seller Modal Styles */
+.add-seller-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    z-index: 1000;
+}
+
+.add-seller-modal {
+    width: min(1200px, 100%);
+    max-height: 92vh;
+    overflow: auto;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+.add-seller-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid #eef2f7;
+}
+
+.add-seller-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+}
+
+.add-seller-close {
+    height: 34px;
+    width: 34px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+}
+
+.add-seller-form {
+    padding: 20px;
+}
+
+.add-seller-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.add-seller-row-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.add-seller-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.add-seller-field-with-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.add-seller-input-group {
+    display: flex;
+    gap: 8px;
+}
+
+.add-seller-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+}
+
+.add-seller-input {
+    height: 38px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0 10px;
+    font-size: 14px;
+    outline: none;
+}
+
+.add-seller-input:focus {
+    border-color: #94a3b8;
+}
+
+.add-seller-select {
+    height: 38px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0 10px;
+    font-size: 14px;
+    outline: none;
+    flex: 1;
+}
+
+.add-seller-textarea {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.add-seller-btn-other {
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 6px;
+    border: 1px solid #a5b4fc;
+    background: #eef2ff;
+    color: #4f46e5;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.add-seller-btn-verify {
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 6px;
+    border: none;
+    background: #0f344d;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.add-seller-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.add-seller-btn-submit {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: 6px;
+    border: none;
+    background: #0f344d;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.add-seller-btn-reset {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background: #6b7280;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+    .add-seller-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+
+    .add-seller-row,
+    .add-seller-row-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Custom Select Styles (for CreatableSelect) */
+.custom-select-container {
+    position: relative;
+}
+
+.custom-select-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    margin-top: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1001;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.custom-select-option {
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #374151;
+}
+
+.custom-select-option:hover {
+    background: #f3f4f6;
+}
+
+.custom-select-add-option {
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    background: #eff6ff;
+    color: #2563eb;
+    font-weight: 600;
+    border-top: 1px solid #d1d5db;
+}
+
+.custom-select-add-option:hover {
+    background: #dbeafe;
+}

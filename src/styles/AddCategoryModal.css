@@ -1,0 +1,118 @@
+/* Add Category Modal Styles */
+.add-category-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    z-index: 1000;
+}
+
+.add-category-modal {
+    width: min(600px, 100%);
+    background: #fff;
+    border-radius: 8px;
+    padding: 40px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.add-category-close-icon {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    /* Slightly rounded functionality matching screenshot look maybe? */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    color: #666;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Actually looking at screenshot, the close button is top right, outside the card or on the edge. 
+   I will replicate a standard close button inside top right for reliability or floating if requested. 
+   Screenshot shows it looks like a separate small white box top right. */
+
+.add-category-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 30px;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    /* Adds space between text and underline */
+}
+
+.add-category-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.add-category-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.add-category-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111;
+}
+
+.add-category-input {
+    height: 42px;
+    border: 1px solid #94a3b8;
+    /* Slightly darker border as per screenshot */
+    border-radius: 6px;
+    padding: 0 12px;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.add-category-input::placeholder {
+    color: #a0aec0;
+}
+
+.add-category-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.add-category-btn-submit {
+    height: 40px;
+    padding: 0 30px;
+    border-radius: 6px;
+    border: none;
+    background: #0f344d;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.add-category-btn-cancel {
+    height: 40px;
+    padding: 0 30px;
+    border-radius: 6px;
+    border: none;
+    background: #e5e7eb;
+    color: #666;
+    font-weight: 700;
+    cursor: pointer;
+    min-width: 100px;
+}

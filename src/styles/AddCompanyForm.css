@@ -1,0 +1,99 @@
+/* AddCompanyForm.css */
+
+.company-form-body {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.company-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Three columns */
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.company-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.company-field.full-width {
+    grid-column: 1 / -1;
+    /* Span full width */
+}
+
+.company-field label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.company-field input[type="text"],
+.company-field input[type="email"],
+.company-field input[type="date"],
+.company-field select,
+.company-field textarea {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.company-field input:focus,
+.company-field select:focus,
+.company-field textarea:focus {
+    border-color: #0b3a54;
+}
+
+/* File Input Styling to match browser default somewhat but cleaner if needed */
+.file-input-wrapper input[type="file"] {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px;
+    width: 100%;
+    font-size: 13px;
+    background: #f9fafb;
+}
+
+
+.company-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn-submit {
+    background-color: #0b3a54;
+    color: #fff;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-submit:hover {
+    background-color: #0f4c6e;
+}
+
+.btn-cancel {
+    background-color: #e5e7eb;
+    color: #374151;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-cancel:hover {
+    background-color: #d1d5db;
+}

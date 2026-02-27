@@ -1,0 +1,119 @@
+/* Add Customer Type Modal Styles */
+.add-customertype-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.add-customertype-modal {
+    width: min(600px, 100%);
+    background: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.add-customertype-close-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #f3f4f6;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    font-size: 18px;
+    color: #555;
+    transition: background 0.2s;
+}
+
+.add-customertype-close-icon:hover {
+    background: #e5e7eb;
+}
+
+.add-customertype-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 30px;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    margin-top: 0;
+}
+
+.add-customertype-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.add-customertype-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.add-customertype-input {
+    height: 40px;
+    border: 1px solid #d1d5db;
+    /* Light grey border */
+    border-radius: 6px;
+    padding: 0 12px;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    color: #333;
+    background: #fff;
+}
+
+.add-customertype-input::placeholder {
+    color: #9ca3af;
+}
+
+.add-customertype-input:focus {
+    border-color: #94a3b8;
+}
+
+.add-customertype-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.add-customertype-btn-submit {
+    height: 40px;
+    padding: 0 30px;
+    border-radius: 6px;
+    border: none;
+    background: #0f344d;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.add-customertype-btn-cancel {
+    height: 40px;
+    padding: 0 30px;
+    border-radius: 6px;
+    border: none;
+    background: #e5e7eb;
+    color: #666;
+    font-weight: 700;
+    cursor: pointer;
+    min-width: 100px;
+}

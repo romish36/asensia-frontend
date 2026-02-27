@@ -1,0 +1,148 @@
+/* Edit Transporter Modal Styles - reusing structure from Customer Modal */
+.edit-transporter-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.edit-transporter-modal {
+    background: #fff;
+    width: 1000px;
+    max-width: 95%;
+    max-height: 95vh;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.edit-transporter-header {
+    padding: 15px 25px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-transporter-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+}
+
+.edit-transporter-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.edit-transporter-body {
+    padding: 25px;
+    overflow-y: auto;
+}
+
+/* Grid Layout for Fields - 3 Columns */
+.edit-transporter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.edit-transporter-form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-transporter-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 6px;
+}
+
+.edit-transporter-input,
+.edit-transporter-select,
+.edit-transporter-textarea {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 0 12px;
+    font-size: 14px;
+    box-sizing: border-box;
+    color: #333;
+    font-family: inherit;
+    background-color: #fff;
+}
+
+.edit-transporter-textarea {
+    height: 80px;
+    padding: 10px;
+    resize: none;
+}
+
+.edit-transporter-input:focus,
+.edit-transporter-select:focus,
+.edit-transporter-textarea:focus {
+    border-color: #666;
+    outline: none;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.edit-transporter-actions {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn-transporter-submit {
+    background-color: #0d3850;
+    /* Dark Blue */
+    color: #fff;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-transporter-cancel {
+    background-color: #ececec;
+    /* Light Gray */
+    color: #666;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .edit-transporter-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .edit-transporter-grid {
+        grid-template-columns: 1fr;
+    }
+}

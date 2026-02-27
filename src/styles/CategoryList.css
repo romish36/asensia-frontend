@@ -1,0 +1,344 @@
+/* Category List Page Styles */
+.category-list-container {
+    background: #fff;
+    border-radius: 8px;
+    padding: 8px;
+    min-height: calc(100vh - 140px);
+}
+
+.category-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 8px;
+}
+
+/* No Filters in screenshot, but we need spacing */
+
+/* Add Category Button */
+.category-add-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+}
+
+.category-btn-add {
+    background-color: #0f344d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Action Buttons */
+.category-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.category-btn-excel {
+    background-color: #22c55e;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.category-btn-print {
+    background-color: #06b6d4;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Table Controls */
+.category-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #555;
+}
+
+.category-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.category-search input {
+    height: 32px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 0 8px;
+    min-width: 150px;
+}
+
+/* Table */
+.category-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.category-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.category-table thead th {
+    background-color: #dff5e8;
+    color: #000;
+    text-align: left;
+    padding: 8px 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.category-table tbody td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #333;
+}
+
+.category-table tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Action Icons */
+.category-action-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.category-icon-btn {
+    background: #f3f4f6;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    width: 32px;
+    height: 32px;
+}
+
+.category-icon-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.category-icon-btn:hover {
+    background: #e5e7eb;
+}
+
+.category-icon-edit {
+    color: #6366f1;
+    /* Purple/Indigo for edit */
+}
+
+.category-icon-delete {
+    color: #ef4444;
+    /* Red for delete */
+}
+
+/* Pagination */
+.category-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #666;
+}
+
+.category-page-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.category-page-btn {
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.category-page-btn.active {
+    background: #e5e7eb;
+    font-weight: 600;
+}
+
+.category-page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media screen {
+    .print-only {
+        display: none !important;
+    }
+}
+
+/* Printable Table Hidden by Default */
+.printable-category-table {
+    display: none;
+}
+
+@media print {
+    @page {
+        size: A4 landscape;
+        margin: 10mm;
+    }
+
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    .category-list-container,
+    .category-list-container * {
+        visibility: visible;
+    }
+
+    .category-list-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background: white;
+    }
+
+    .category-title,
+    .category-add-section,
+    .category-actions,
+    .category-controls,
+    .category-pagination,
+    .app-shell__sidebar,
+    .app-shell__header,
+    .app-shell__footer {
+        display: none !important;
+    }
+
+    /* Hide normal paginated table */
+    .category-table-wrapper {
+        display: none !important;
+    }
+
+    /* Show the printable table which has all items */
+    .printable-category-table {
+        display: block !important;
+        position: relative;
+        width: 100%;
+        visibility: visible !important;
+    }
+
+    .printable-category-table table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        table-layout: auto;
+        color: #000;
+    }
+
+    .printable-category-table th {
+        background-color: #fff !important;
+        color: #000;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-bottom: 2px solid #333;
+        border-top: 1px solid #333;
+        padding: 10px 8px;
+        text-align: left;
+        white-space: nowrap;
+        font-size: 11px;
+    }
+
+    .printable-category-table td {
+        padding: 10px 8px;
+        border-bottom: 1px solid #eee;
+        color: #000;
+        vertical-align: middle;
+    }
+
+    .category-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        /* Increased from 10px */
+        color: #000;
+        table-layout: auto;
+    }
+
+    .category-table thead th {
+        background-color: #fff !important;
+        /* Cleaner white background */
+        color: #000;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-bottom: 2px solid #333;
+        /* Strong layout separation */
+        border-top: 1px solid #333;
+        padding: 10px 8px;
+        /* More breathing room */
+        text-align: left;
+        white-space: nowrap;
+        font-size: 11px;
+    }
+
+    .category-table tbody td {
+        padding: 10px 8px;
+        /* More breathing room */
+        border-bottom: 1px solid #eee;
+        /* Subtle separator */
+        color: #000;
+        vertical-align: middle;
+    }
+
+    /* Subtle Zebra Striping */
+    .category-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9 !important;
+        /* Very light grey */
+    }
+
+    /* Remove vertical borders for cleaner look if any */
+    .category-table th,
+    .category-table td {
+        border-left: none;
+        border-right: none;
+    }
+
+    /* Column Visibility */
+    .screen-only {
+        display: none !important;
+    }
+
+    .print-only {
+        display: table-cell !important;
+    }
+}

@@ -1,0 +1,44 @@
+/* Air Datepicker Theme Customization */
+.air-datepicker {
+    --adp-border-radius: 8px;
+    --adp-font-size: 14px;
+    --adp-accent-color: #0b3a54;
+    --adp-background-color: #ffffff;
+    --adp-color: #334155;
+    --adp-color-secondary: #94a3b8;
+    --adp-cell-background-color-selected: #0b3a54;
+    --adp-cell-background-color-selected-hover: #164e63;
+    --adp-cell-background-color-in-range: rgba(11, 58, 84, 0.1);
+    --adp-cell-background-color-in-range-focused: rgba(11, 58, 84, 0.2);
+    --adp-border-color: #e2e8f0;
+    --adp-border-color-inner: #f1f5f9;
+    z-index: 999999 !important;
+    /* Ensure it stays on top of modals */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--adp-border-color);
+    font-family: inherit;
+}
+
+.air-datepicker-nav--title i {
+    color: var(--adp-color-secondary);
+}
+
+.air-datepicker-cell.-selected-,
+.air-datepicker-cell.-selected-.-focus- {
+    background: var(--adp-cell-background-color-selected);
+    color: #ffffff;
+}
+
+.air-datepicker-cell.-current- {
+    color: var(--adp-accent-color);
+    font-weight: bold;
+}
+
+.air-datepicker-cell.-current-.-selected- {
+    color: #ffffff;
+}
+
+.air-datepicker-button:hover {
+    color: var(--adp-accent-color);
+    background: var(--adp-cell-background-color-in-range);
+}

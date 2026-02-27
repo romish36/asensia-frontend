@@ -1,0 +1,10 @@
+/* Copying styles from InStock.css but can customize */
+/* For now, let's reuse InStock.css classes in the component to maintain consistency */
+/* If specific overrides needed: */
+.out-stock-container {
+    padding: 24px;
+    background-color: #f8fafc;
+    min-height: 100vh;
+}
+
+/* Reusing list-page-* classes from generic styles */

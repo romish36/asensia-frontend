@@ -1,0 +1,122 @@
+/* Modal Overlay */
+.cd-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Content */
+.cd-modal-content {
+    background: #fff;
+    width: 600px;
+    max-width: 90%;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    padding: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Close Button */
+.cd-close-btn {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cd-close-btn:hover {
+    color: #333;
+    border-color: #bbb;
+}
+
+/* Header */
+.cd-header {
+    padding: 20px 20px 10px 20px;
+}
+
+.cd-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    text-transform: capitalize;
+    display: inline-block;
+    border-bottom: 2px solid #333;
+    padding-bottom: 3px;
+    margin: 0;
+}
+
+/* Body */
+.cd-body {
+    padding: 10px 20px 30px 20px;
+}
+
+.cd-list-container {
+    background-color: #fcfcfc;
+    border: 1px solid #f0f0f0;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+/* Row Item */
+.cd-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 10px;
+    border-bottom: 1px dashed #ccc;
+    font-size: 13px;
+    align-items: flex-start;
+}
+
+.cd-row:last-child {
+    border-bottom: none;
+}
+
+.cd-label {
+    font-weight: 700;
+    color: #666;
+    /* Grayish bold text for labels */
+    text-transform: uppercase;
+    width: 40%;
+    flex-shrink: 0;
+}
+
+.cd-value {
+    font-weight: 500;
+    color: #222;
+    /* Darker for values */
+    width: 60%;
+    text-align: right;
+    word-break: break-word;
+}

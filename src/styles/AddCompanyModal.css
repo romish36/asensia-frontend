@@ -1,0 +1,209 @@
+/* Add Company Modal Styles */
+.add-company-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.add-company-modal {
+    width: min(1200px, 100%);
+    max-height: 95vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.add-company-content {
+    padding: 30px 40px;
+}
+
+/* Close Button */
+.add-company-close-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #f3f4f6;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    font-size: 18px;
+    color: #555;
+    z-index: 10;
+}
+
+.add-company-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 30px;
+}
+
+/* Section Headers */
+.add-company-section-title {
+    color: #1e3a8a;
+    /* Dark blue specific to section headers in screenshot */
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    margin-top: 25px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 8px;
+}
+
+.add-company-section-title:first-child {
+    margin-top: 0;
+}
+
+/* Grids */
+.add-company-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.add-company-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.add-company-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.add-company-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+}
+
+.add-company-input,
+.add-company-select {
+    height: 38px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 0 10px;
+    font-size: 13px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    color: #333;
+    background: #fff;
+}
+
+.add-company-input::placeholder {
+    color: #9ca3af;
+}
+
+/* Mobile input group for country code styling if needed, simplifying for now */
+.add-company-mobile-group {
+    display: flex;
+    gap: 5px;
+}
+
+.add-company-mobile-code {
+    width: 60px;
+    height: 38px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 0 5px;
+    font-size: 13px;
+    background: #fff;
+}
+
+/* Textarea */
+.add-company-textarea {
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 13px;
+    width: 100%;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+    outline: none;
+}
+
+/* File Input */
+.add-company-file-input {
+    height: 38px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 13px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+/* Buttons */
+.add-company-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.add-company-btn-submit {
+    height: 40px;
+    padding: 0 25px;
+    border-radius: 6px;
+    border: none;
+    background: #0f344d;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.add-company-btn-reset {
+    height: 40px;
+    padding: 0 25px;
+    border-radius: 6px;
+    border: none;
+    background: #8b5cf6;
+    /* Looking purple/grey in screenshot for Reset, maybe #6b7280 or #818cf8. Using a muted purple-grey based on screenshot/reset button color usually being secondary.*/
+    background-color: #6b7280;
+    /* Standard reset grey */
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .add-company-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+
+    .add-company-grid-4,
+    .add-company-grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .add-company-content {
+        padding: 20px;
+    }
+}
