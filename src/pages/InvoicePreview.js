@@ -309,7 +309,7 @@ const InvoicePreview = ({ data: initialData, onBack }) => {
                         <div className="header-image-placeholder">
                             {data?.companyId?.companyLetterHeadHeaderImage ? (
                                 <img
-                                    src={`${SERVER_URL}/${data.companyId.companyLetterHeadHeaderImage.startsWith('/') ? data.companyId.companyLetterHeadHeaderImage.substring(1) : data.companyId.companyLetterHeadHeaderImage}`}
+                                    src={data.companyId.companyLetterHeadHeaderImage.startsWith('data:') ? data.companyId.companyLetterHeadHeaderImage : `${SERVER_URL}/${data.companyId.companyLetterHeadHeaderImage.replace(/\\/g, '/').startsWith('/') ? data.companyId.companyLetterHeadHeaderImage.replace(/\\/g, '/').substring(1) : data.companyId.companyLetterHeadHeaderImage.replace(/\\/g, '/')}`}
                                     alt="Header"
                                     className="asencia_header"
                                 />
@@ -517,7 +517,7 @@ const InvoicePreview = ({ data: initialData, onBack }) => {
                             <div style={{ height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                                 {data?.companyId?.companyDigitalSignature ? (
                                     <img
-                                        src={`${SERVER_URL}/${data.companyId.companyDigitalSignature.startsWith('/') ? data.companyId.companyDigitalSignature.substring(1) : data.companyId.companyDigitalSignature}`}
+                                        src={data.companyId.companyDigitalSignature.startsWith('data:') ? data.companyId.companyDigitalSignature : `${SERVER_URL}/${data.companyId.companyDigitalSignature.replace(/\\/g, '/').startsWith('/') ? data.companyId.companyDigitalSignature.replace(/\\/g, '/').substring(1) : data.companyId.companyDigitalSignature.replace(/\\/g, '/')}`}
                                         alt="Authorised Signatory"
                                         className="auth-sign-img"
                                     />
@@ -532,7 +532,7 @@ const InvoicePreview = ({ data: initialData, onBack }) => {
                     {data?.companyId?.companyLetterHeadFooterImage && (
                         <div className="footer-image-container" style={{ borderTop: '1px solid #333' }}>
                             <img
-                                src={`${SERVER_URL}/${data.companyId.companyLetterHeadFooterImage.startsWith('/') ? data.companyId.companyLetterHeadFooterImage.substring(1) : data.companyId.companyLetterHeadFooterImage}`}
+                                src={data.companyId.companyLetterHeadFooterImage.startsWith('data:') ? data.companyId.companyLetterHeadFooterImage : `${SERVER_URL}/${data.companyId.companyLetterHeadFooterImage.replace(/\\/g, '/').startsWith('/') ? data.companyId.companyLetterHeadFooterImage.replace(/\\/g, '/').substring(1) : data.companyId.companyLetterHeadFooterImage.replace(/\\/g, '/')}`}
                                 alt="Footer"
                                 style={{ width: '100%', display: 'block' }}
                             />

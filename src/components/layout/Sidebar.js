@@ -196,7 +196,7 @@ function Sidebar({
               src={isSuperAdmin
                 ? superLogo
                 : (companyLogo
-                  ? (companyLogo.startsWith('data:') ? companyLogo : `${SERVER_URL}/${companyLogo.startsWith('/') ? companyLogo.substring(1) : companyLogo}`)
+                  ? (companyLogo.startsWith('data:') ? companyLogo : `${SERVER_URL}/${companyLogo.replace(/\\/g, '/').startsWith('/') ? companyLogo.replace(/\\/g, '/').substring(1) : companyLogo.replace(/\\/g, '/')}`)
                   : superLogo)
               }
               alt={isSuperAdmin ? "Super Admin Logo" : (companyName || "Asencia Logo")}
