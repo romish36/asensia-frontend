@@ -79,7 +79,6 @@ import AddExpensesModal from './components/modals/AddExpensesModal';
 import EditExpensesModal from './components/modals/EditExpensesModal';
 
 // Styles
-import './App.css';
 import './styles/layout.css';
 
 // Helper component for Company Settings redirect
