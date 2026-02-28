@@ -41,7 +41,9 @@ const ChatPage = () => {
         const storedUser = JSON.parse(sessionStorage.getItem('user'));
         setUser(storedUser);
 
-        const newSocket = io(SOCKET_URL);
+        const newSocket = io(SOCKET_URL, {
+            transports: ["websocket", "polling"]
+        });
         setSocket(newSocket);
 
         const token = sessionStorage.getItem('token');

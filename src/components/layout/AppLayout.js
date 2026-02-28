@@ -68,8 +68,7 @@ function AppLayout({ children, activeKey, activeTitle, onNavSelect, onLogout }) 
 
     // Socket for real-time updates
     const socket = io(SOCKET_URL, {
-      transports: ["websocket"],
-      upgrade: false
+      transports: ["websocket", "polling"]
     });
 
     socket.on('connect', () => {
