@@ -27,7 +27,7 @@ function UserList({ onAddUser, onEditUser, onPermissions, onChat }) {
     // Fetch Users and Role
     const fetchUsers = async (search = '', page = 1, limit = 10) => {
         try {
-            setLoading(true);
+            if (!search) setLoading(true);
             const storedUser = JSON.parse(sessionStorage.getItem('user'));
 
             if (storedUser) {

@@ -170,7 +170,7 @@ function AddTransporterModal({ isOpen, onClose, isPage, onTransporterAdded }) {
             if (country) {
                 const token = sessionStorage.getItem('token');
                 try {
-                    const res = await fetch(`${API_BASE_URL}/state`, {
+                    const res = await fetch(`${API_BASE_URL}/state?countryId=${country.countryId}`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     if (res.ok) {
@@ -194,7 +194,7 @@ function AddTransporterModal({ isOpen, onClose, isPage, onTransporterAdded }) {
             if (state) {
                 const token = sessionStorage.getItem('token');
                 try {
-                    const res = await fetch(`${API_BASE_URL}/city`, {
+                    const res = await fetch(`${API_BASE_URL}/city?stateId=${state.stateId}`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     if (res.ok) {

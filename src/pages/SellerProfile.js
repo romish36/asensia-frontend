@@ -466,7 +466,7 @@ const SellerProfile = ({ seller, onBack, onPreview, onEdit }) => {
                 }}
                 entityName={displayData.tradeName}
                 entityType="Seller"
-                entityId={seller.sellerId || seller._id}
+                entityId={seller?.sellerId || seller?._id}
                 paymentToEdit={paymentToEdit}
             />
         </div>

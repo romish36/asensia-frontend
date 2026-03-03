@@ -596,14 +596,6 @@ function AddPurchaseOrderForm({ isOpen, onClose, editingRow, isPage }) {
         toast.error(`Please enter New Product Name for Item ${i + 1}`);
         return;
       }
-      if (!row.hsnCode) {
-        toast.error(`HSN Code is mandatory for Item ${i + 1}`);
-        return;
-      }
-      if (!row.grade) {
-        toast.error(`Grade is mandatory for Item ${i + 1}`);
-        return;
-      }
       if (!row.rate) {
         toast.error(`Rate is mandatory for Item ${i + 1}`);
         return;
@@ -1089,7 +1081,7 @@ function AddPurchaseOrderForm({ isOpen, onClose, editingRow, isPage }) {
                   </div>
 
                   <div className="po-field">
-                    <label className="po-label">HSN Code <span style={{ color: 'red' }}>*</span></label>
+                    <label className="po-label">HSN Code</label>
                     <input
                       className="po-input"
                       value={row.hsnCode}
@@ -1098,7 +1090,7 @@ function AddPurchaseOrderForm({ isOpen, onClose, editingRow, isPage }) {
                   </div>
 
                   <div className="po-field">
-                    <label className="po-label">Grade <span style={{ color: 'red' }}>*</span></label>
+                    <label className="po-label">Grade</label>
                     <select
                       className="po-select"
                       value={row.grade}

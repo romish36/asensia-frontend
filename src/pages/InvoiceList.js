@@ -99,7 +99,7 @@ function InvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigateToProfi
     };
 
     const fetchInvoices = async (searchQuery = '', currentPage = 1, limit = 10, filters = {}) => {
-        setLoading(true);
+        if (!searchQuery) setLoading(true);
         try {
             const queryParams = new URLSearchParams();
             if (searchQuery) queryParams.append('search', searchQuery);
@@ -256,23 +256,17 @@ function InvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigateToProfi
     const toggleActive = async (id) => {
         try {
             const item = rows.find(r => r._id === id);
-            const response = await fetch(`${API_BASE_URL}/sales-invoice`, {
+            await fetchApi(`/sales-invoice/${id}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
                 body: JSON.stringify({ active: !item.active })
             });
 
-            if (response.ok) {
-                setRows(prev => prev.map(r => r._id === id ? { ...r, active: !r.active } : r));
-                toast.success(`Invoice ${!item.active ? 'Activated' : 'Deactivated'}`);
-            } else {
+            setRows(prev => prev.map(r => r._id === id ? { ...r, active: !r.active } : r));
+            toast.success(`Invoice ${!item.active ? 'Activated' : 'Deactivated'}`);
+        } catch (error) {
+            if (error.status !== 403) {
                 toast.error("Failed to update status");
             }
-        } catch (error) {
-            toast.error("Server error");
         }
     };
 
@@ -292,7 +286,9 @@ function InvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigateToProfi
                     setRows(prev => prev.filter(r => r._id !== id));
                     Swal.fire('Deleted!', 'Invoice has been deleted.', 'success');
                 } catch (error) {
-                    toast.error("Server error");
+                    if (error.status !== 403) {
+                        toast.error("Server error");
+                    }
                 }
             }
         });

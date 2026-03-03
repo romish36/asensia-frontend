@@ -30,7 +30,7 @@ function TransporterList({ onNavigateToProfile, onAddTransporter, onEditTranspor
 
     const fetchTransporters = async (searchQuery = '', currentPage = 1, limit = 10, typeId = '') => {
         try {
-            setLoading(true);
+            if (!searchQuery) setLoading(true);
             const queryParams = new URLSearchParams();
             if (searchQuery) queryParams.append('search', searchQuery);
             if (typeId) queryParams.append('transporterType', typeId);

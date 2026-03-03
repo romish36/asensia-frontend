@@ -22,7 +22,7 @@ function SaleTypeList({ onAdd, onEdit }) {
 
     const fetchSaleTypes = async (search = '', page = 1, limit = 10) => {
         try {
-            setLoading(true);
+            if (!search) setLoading(true);
             const result = await fetchApi(`/sale-type?search=${search}&page=${page}&limit=${limit}`);
 
             if (result.saleTypes && Array.isArray(result.saleTypes)) {

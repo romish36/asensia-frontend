@@ -34,8 +34,8 @@ export const SETTINGS_ITEMS = [
   { key: 'color', label: 'Color', path: '/settings/color', module: 'Color' },
   { key: 'expenses-purpose', label: 'Expenses Purpose', path: '/settings/expenses-purpose', module: 'ExpensePurpose' },
   { key: 'invoice-copy', label: 'Invoice Copy', path: '/settings/invoice-copy', module: 'Invoice Copy' },
-  { key: 'plan', label: 'Plans', path: '/settings/plan', module: 'Company' },
-  { key: 'coupon', label: 'Coupons', path: '/settings/coupon', module: 'Company' },
+  { key: 'plan', label: 'Plans', path: '/settings/plan', module: 'Plan' },
+  { key: 'coupon', label: 'Coupons', path: '/settings/coupon', module: 'Coupon' },
 ];
 
 function AppLayout({ children, activeKey, activeTitle, onNavSelect, onLogout }) {
@@ -100,12 +100,15 @@ function AppLayout({ children, activeKey, activeTitle, onNavSelect, onLogout }) 
     if (userRole === 'SUPER_ADMIN') {
       baseItems = [
         { key: 'dashboard', label: 'Dashboard', path: '/dashboard' },
-        { key: 'company', label: 'Company List', path: '/settings/company' },
-        { key: 'user', label: 'User', path: '/settings/user' },
-        { key: 'plan', label: 'Plans', path: '/settings/plan' },
-        { key: 'coupon', label: 'Coupons', path: '/settings/coupon' },
+        { key: 'company', label: 'Company List', path: '/settings/company', module: 'Company' },
+        { key: 'user', label: 'User', path: '/settings/user', module: 'User' },
+        { key: 'plan', label: 'Plans', path: '/settings/plan', module: 'Plan' },
+        { key: 'coupon', label: 'Coupons', path: '/settings/coupon', module: 'Coupon' },
         { key: 'chat', label: 'Live Chat', path: '/chat' }
-      ];
+      ].filter(item => {
+        if (item.key === 'dashboard' || item.key === 'chat') return true;
+        return hasPermission(item.module, 'view');
+      });
     } else {
       baseItems = MENU_ITEMS.filter(item => {
         if (item.key === 'dashboard' || item.key === 'chat') return true;

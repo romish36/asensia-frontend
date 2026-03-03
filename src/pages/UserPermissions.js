@@ -8,7 +8,7 @@ import API_BASE_URL from '../config/apiConfig.js';
 const MODULES = [
     "Purchase Order", "Invoice", "InStock", "OutStock", "Seller", "Customer", "Transporter", "Product", "Category",
     "Expense", "User", "Grade", "CustomerType", "InvoiceName", "PaymentMode", "SaleType",
-    "Color", "ExpensePurpose", "Company"
+    "Color", "ExpensePurpose", "Company", "Plan", "Coupon"
 ];
 
 const ACTIONS = []; // Replaced by dynamic dbActions from database

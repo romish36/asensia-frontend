@@ -45,7 +45,7 @@ function CategoryList({ onAddCategory, onEditCategory }) {
 
     const fetchCategories = async (searchQuery = '', currentPage = 1, limit = 10) => {
         try {
-            setLoading(true);
+            if (!searchQuery) setLoading(true);
             const params = new URLSearchParams();
             if (selectedCompany) params.append('companyId', selectedCompany);
             if (searchQuery) params.append('search', searchQuery);

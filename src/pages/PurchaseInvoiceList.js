@@ -101,7 +101,7 @@ function PurchaseInvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigat
 
   const fetchPurchaseInvoices = async (searchQuery = '', currentPage = 1, limit = 10, filters = {}) => {
     try {
-      setLoading(true);
+      if (!searchQuery) setLoading(true);
       const queryParams = new URLSearchParams();
       if (searchQuery) queryParams.append('search', searchQuery);
       queryParams.append('page', currentPage);
@@ -238,22 +238,16 @@ function PurchaseInvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigat
   const toggleActive = async (id) => {
     try {
       const row = rows.find(r => r._id === id);
-      const response = await fetch(`${API_BASE_URL}/purchase-order`, {
+      await fetchApi(`/purchase-order/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
         body: JSON.stringify({ active: !row.active })
       });
-      if (response.ok) {
-        setRows((prev) => prev.map((r) => (r._id === id ? { ...r, active: !r.active } : r)));
-        toast.success(`Invoice ${!row.active ? 'Activated' : 'Deactivated'}`);
-      } else {
-        toast.error("Update failed");
-      }
+      setRows((prev) => prev.map((r) => (r._id === id ? { ...r, active: !r.active } : r)));
+      toast.success(`Invoice ${!row.active ? 'Activated' : 'Deactivated'}`);
     } catch (error) {
-      toast.error("Server error");
+      if (error.status !== 403) {
+        toast.error("Failed to update status");
+      }
     }
   };
 
@@ -374,7 +368,9 @@ function PurchaseInvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigat
           setRows((prev) => prev.filter((r) => r._id !== id));
           Swal.fire('Deleted!', 'Purchase invoice has been deleted.', 'success');
         } catch (error) {
-          Swal.fire('Error!', 'Server error.', 'error');
+          if (error.status !== 403) {
+            Swal.fire('Error!', 'Server error.', 'error');
+          }
         }
       }
     });

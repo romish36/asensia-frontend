@@ -658,10 +658,7 @@ function AddNormalInvoiceForm({ isOpen, onClose, editingRow, isPage }) {
           toast.error(`Product is mandatory for Item ${i + 1}`);
           return;
         }
-        if (!item.hsnCode) {
-          toast.error(`HSN Code is mandatory for Item ${i + 1}`);
-          return;
-        }
+
         if (!item.rate) {
           toast.error(`Rate is mandatory for Item ${i + 1}`);
           return;
@@ -1376,11 +1373,11 @@ function AddNormalInvoiceForm({ isOpen, onClose, editingRow, isPage }) {
                     </select>
                   </div>
                   <div className="po-field">
-                    <label className="po-label">HSN Code <span style={{ color: 'red' }}>*</span></label>
+                    <label className="po-label">HSN Code</label>
                     <input className="po-input" placeholder="" name="hsnCode" value={item.hsnCode} onChange={(e) => handleItemChange(index, e)} />
                   </div>
                   <div className="po-field">
-                    <label className="po-label">Grade <span style={{ color: 'red' }}>*</span></label>
+                    <label className="po-label">Grade</label>
                     <select className="invoice-select" name="grade" value={item.grade} onChange={(e) => handleItemChange(index, e)}>
                       <option value="">Select Grade</option>
                       {gradeList.map(g => (

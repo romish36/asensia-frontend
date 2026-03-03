@@ -167,7 +167,7 @@ const EditTransporterModal = ({ isOpen, onClose, transporter, isPage, onTranspor
     const fetchCountries = async () => {
         const token = sessionStorage.getItem('token');
         try {
-            const response = await fetch(`${API_BASE_URL}/transporter`, {
+            const response = await fetch(`${API_BASE_URL}/country`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -190,7 +190,7 @@ const EditTransporterModal = ({ isOpen, onClose, transporter, isPage, onTranspor
             if (country) {
                 const token = sessionStorage.getItem('token');
                 try {
-                    const res = await fetch(`${API_BASE_URL}/transporter`, {
+                    const res = await fetch(`${API_BASE_URL}/state?countryId=${country.countryId}`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     if (res.ok) {
@@ -214,7 +214,7 @@ const EditTransporterModal = ({ isOpen, onClose, transporter, isPage, onTranspor
             if (state) {
                 const token = sessionStorage.getItem('token');
                 try {
-                    const res = await fetch(`${API_BASE_URL}/transporter`, {
+                    const res = await fetch(`${API_BASE_URL}/city?stateId=${state.stateId}`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     if (res.ok) {

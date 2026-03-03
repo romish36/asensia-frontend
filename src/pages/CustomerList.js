@@ -27,8 +27,10 @@ function CustomerList({ onNavigateToProfile, onAddCustomer, onEditCustomer }) {
     const [selectedCustomerForView, setSelectedCustomerForView] = useState(null);
 
     useEffect(() => {
-        fetchCustomerTypes();
-    }, []);
+        if (hasPermission('CustomerType', 'view')) {
+            fetchCustomerTypes();
+        }
+    }, [hasPermission]);
 
     const fetchCustomerTypes = async () => {
         try {
@@ -41,7 +43,7 @@ function CustomerList({ onNavigateToProfile, onAddCustomer, onEditCustomer }) {
 
     const fetchCustomers = async (searchQuery = '', currentPage = 1, limit = 10, typeId = '') => {
         try {
-            setLoading(true);
+            if (!searchQuery) setLoading(true);
             const queryParams = new URLSearchParams();
             if (searchQuery) queryParams.append('search', searchQuery);
             if (typeId) queryParams.append('customerType', typeId);

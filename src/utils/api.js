@@ -22,7 +22,7 @@ export const fetchApi = async (endpoint, options = {}) => {
 
             // Handle Permission Denied Globally
             if (response.status === 403) {
-                toast.warn("You do not have access to this page. Please contact admin.");
+                toast.warn("Permission Denied: You do not have access to perform this action.");
             }
 
             const error = new Error(errorBody.message || `Server responded with ${response.status}`);

@@ -476,7 +476,7 @@
     }
 
     .invoice-content-container {
-        min-height: 300px !important;
+        min-height: 200px !important;
         display: flex !important;
         border-bottom: none !important;
     }
@@ -502,24 +502,28 @@
     .amount-words-row,
     .summary-table td,
     .header-image-container {
-        padding: 5px !important;
+        padding: 3px !important;
+    }
+
+    .address-content p {
+        margin: 1px 0 !important;
     }
 
     .remark-row {
-        padding: 5px !important;
-        min-height: 20px !important;
+        padding: 3px !important;
+        min-height: 15px !important;
     }
 
     .terms-signature-row {
-        min-height: 100px !important;
+        min-height: 80px !important;
     }
 
     .header-image-container {
-        padding: 8px !important;
+        padding: 5px !important;
     }
 
     .asencia_header {
-        max-height: 100px !important;
+        max-height: 90px !important;
     }
 
     /* Ensure colors print exact */
@@ -532,5 +536,17 @@
     .invoice-box>div {
         break-inside: avoid;
         page-break-inside: avoid;
+    }
+
+    /* Add a small scaling to be safe if content is still too long */
+    .invoice-box {
+        transform: scale(0.97);
+        transform-origin: top center;
+        font-size: 9.5px !important;
+    }
+
+    .footer-image-container img {
+        max-height: 80px !important;
+        object-fit: contain !important;
     }
 }

@@ -79,8 +79,10 @@ function SellerList({ onNavigateToProfile, onAddSeller, onEditSeller }) {
     const [selectedSellerForView, setSelectedSellerForView] = useState(null);
 
     useEffect(() => {
-        fetchCustomerTypes();
-    }, []);
+        if (hasPermission('CustomerType', 'view')) {
+            fetchCustomerTypes();
+        }
+    }, [hasPermission]);
 
     const fetchCustomerTypes = async () => {
         try {
@@ -93,7 +95,7 @@ function SellerList({ onNavigateToProfile, onAddSeller, onEditSeller }) {
 
     const fetchSellers = async (searchQuery = '', currentPage = 1, limit = 10, typeId = '') => {
         try {
-            setLoading(true);
+            if (!searchQuery) setLoading(true);
             const queryParams = new URLSearchParams();
             if (searchQuery) queryParams.append('search', searchQuery);
             if (typeId) queryParams.append('sellerType', typeId);

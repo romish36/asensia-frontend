@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/ProfilePage.css';
 import { toast } from 'react-toastify';
 import API_BASE_URL from '../config/apiConfig.js';
+import ProfileSkeleton from '../components/ui/ProfileSkeleton';
 
 function EditProfilePage() {
     const navigate = useNavigate();
@@ -155,7 +156,7 @@ function EditProfilePage() {
     // Helper check
     const isSuperAdmin = formData.role === 'SUPER_ADMIN';
 
-    if (loading) return <div className="loading-spinner">Loading...</div>;
+    if (loading) return <ProfileSkeleton />;
 
     return (
         <div className="profile-page-container">

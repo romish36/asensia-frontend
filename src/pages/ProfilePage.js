@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import '../styles/ProfilePage.css';
 import API_BASE_URL from '../config/apiConfig.js';
+import ProfileSkeleton from '../components/ui/ProfileSkeleton';
 
 function ProfilePage() {
     const navigate = useNavigate();
@@ -49,7 +50,7 @@ function ProfilePage() {
     }, [navigate]);
 
     if (loading) {
-        return <div className="loading-spinner">Loading...</div>; // You might want a better spinner
+        return <ProfileSkeleton />;
     }
 
     if (!profile) {

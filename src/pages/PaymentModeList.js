@@ -22,7 +22,7 @@ function PaymentModeList({ onAdd, onEdit }) {
 
     const fetchPaymentModes = async (search = '', page = 1, limit = 10) => {
         try {
-            setLoading(true);
+            if (!search) setLoading(true);
             const result = await fetchApi(`/payment-mode?search=${search}&page=${page}&limit=${limit}`);
 
             if (result.paymentModes && Array.isArray(result.paymentModes)) {

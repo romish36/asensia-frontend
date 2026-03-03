@@ -61,7 +61,7 @@ function OutStock() {
 
     const fetchOutStocks = async (search = '', page = 1, limit = 10, filterParams = {}) => {
         try {
-            setLoading(true);
+            if (!search) setLoading(true);
             const queryParams = new URLSearchParams();
             if (search) queryParams.append('search', search);
             queryParams.append('page', page);

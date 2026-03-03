@@ -28,7 +28,7 @@ function GradeList({ onAddGrade, onEditGrade }) {
 
     const fetchGrades = async (search = '', page = 1, limit = 10) => {
         try {
-            setLoading(true);
+            if (!search) setLoading(true);
             const token = sessionStorage.getItem('token');
             const result = await fetchApi(`/grade?search=${search}&page=${page}&limit=${limit}`);
 

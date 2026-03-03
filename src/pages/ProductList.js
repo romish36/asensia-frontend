@@ -145,7 +145,7 @@ function ProductList({ onAddProduct, onEditProduct }) {
 
     const fetchProducts = async (searchQuery = '', currentPage = 1, limit = 10) => {
         try {
-            setLoading(true);
+            if (!searchQuery) setLoading(true);
             if (!token) {
                 throw new Error('No authentication token found. Please login again.');
             }

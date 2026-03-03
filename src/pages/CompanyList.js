@@ -27,7 +27,7 @@ function CompanyList({ onAddCompany, onEditCompany, onViewProfile }) {
     // Fetch Companies from API
     const fetchCompanies = async (search = '', page = 1, limit = 10) => {
         try {
-            setLoading(true);
+            if (!search) setLoading(true);
             const token = sessionStorage.getItem('token');
             if (!token) {
                 setLoading(false);

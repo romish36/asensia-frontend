@@ -426,7 +426,7 @@ const CustomerProfile = ({ customer, onBack, onPreviewInvoice, onEdit }) => {
                 }}
                 entityName={displayData.name}
                 entityType="Customer"
-                entityId={customer.customerId || customer._id}
+                entityId={customer?.customerId || customer?._id}
                 paymentToEdit={paymentToEdit}
             />
         </div>

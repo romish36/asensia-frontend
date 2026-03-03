@@ -45,21 +45,30 @@ export const PermissionProvider = ({ children }) => {
                 }
             }
 
-            // Only SUPER_ADMIN has hardcoded full access
-            if (user.role === 'SUPER_ADMIN') {
-                setPermissions({ isSuperAdmin: true });
-                setLoading(false);
-                return;
-            }
+            // Fetch actual permissions record
+            try {
+                const response = await axios.get(`${API_BASE_URL}/user-permissions/${user.userId}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
 
-            const response = await axios.get(`${API_BASE_URL}/user-permissions/${user.userId}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-
-            if (response.data && response.data.permissions) {
-                setPermissions(response.data.permissions);
-            } else {
-                setPermissions({});
+                if (response.data && response.data.permissions) {
+                    const fetchedPerms = response.data.permissions;
+                    if (user.role === 'SUPER_ADMIN') {
+                        setPermissions({ ...fetchedPerms, isSuperAdmin: true });
+                    } else {
+                        setPermissions(fetchedPerms);
+                    }
+                } else if (user.role === 'SUPER_ADMIN') {
+                    setPermissions({ isSuperAdmin: true });
+                } else {
+                    setPermissions({});
+                }
+            } catch (err) {
+                if (user.role === 'SUPER_ADMIN') {
+                    setPermissions({ isSuperAdmin: true });
+                } else {
+                    setPermissions({});
+                }
             }
         } catch (error) {
             console.error("Error fetching permissions:", error);
@@ -92,11 +101,18 @@ export const PermissionProvider = ({ children }) => {
 
     // Function to check if a user has a specific permission
     const hasPermission = useCallback((moduleName, action) => {
-        if (permissions.isSuperAdmin) return true;
-
         const modulePerms = permissions[moduleName];
-        if (!modulePerms) return false;
 
+        if (permissions.isSuperAdmin) {
+            // If super admin has a specific permission set for this module/action, respect it.
+            // This allows them to hide/show their own dashboard cards.
+            if (modulePerms && modulePerms[action] !== undefined) {
+                return modulePerms[action] === 1;
+            }
+            return true; // Default to true for super admins
+        }
+
+        if (!modulePerms) return false;
         return modulePerms[action] === 1;
     }, [permissions]);
 

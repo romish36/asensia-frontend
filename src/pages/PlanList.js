@@ -22,7 +22,7 @@ function PlanList({ onAddPlan, onEditPlan }) {
 
     const fetchPlans = async (search = '', page = 1, limit = 10) => {
         try {
-            setLoading(true);
+            if (!search) setLoading(true);
             const queryParams = new URLSearchParams();
             if (search) queryParams.append('search', search);
             queryParams.append('page', page);

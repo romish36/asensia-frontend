@@ -43,8 +43,10 @@ const AddPaymentModal = ({ isOpen, onClose, entityName, entityType, entityId, pa
                 console.error("Error fetching payment modes:", error);
             }
         };
-        fetchPaymentModes();
-    }, []);
+        if (isOpen) {
+            fetchPaymentModes();
+        }
+    }, [isOpen]);
 
     useEffect(() => {
         if (isOpen) {

@@ -205,7 +205,7 @@ function AddCustomerModal({ isOpen, onClose, isPage }) {
             if (country) {
                 const token = sessionStorage.getItem('token');
                 try {
-                    const states = await fetchApi('/state');
+                    const states = await fetchApi(`/state?countryId=${country.countryId}`);
                     setAllStates(states);
                     setStateList(states.map(s => s.stateName));
                 } catch (error) {
@@ -224,7 +224,7 @@ function AddCustomerModal({ isOpen, onClose, isPage }) {
             if (state) {
                 const token = sessionStorage.getItem('token');
                 try {
-                    const cities = await fetchApi('/city');
+                    const cities = await fetchApi(`/city?stateId=${state.stateId}`);
                     setCityList(cities.map(c => c.cityName));
                 } catch (error) {
                     console.error("Error fetching cities:", error);

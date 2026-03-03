@@ -93,6 +93,23 @@ const ICONS = {
       <line x1="12" y1="16" x2="12.01" y2="16"></line>
     </svg>
   ),
+  user: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  ),
+  plan: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+    </svg>
+  ),
+  coupon: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M15 5l-10 10" />
+      <path d="M21 7.5a2.5 2.5 0 0 0-2.5-2.5H16l-3-3v3.5l-3-3v3.5H3.5A2.5 2.5 0 0 0 1 7.5v9A2.5 2.5 0 0 0 3.5 19H7l3 3v-3.5l3 3v-3.5h2.5a2.5 2.5 0 0 0 2.5-2.5v-9z" />
+    </svg>
+  ),
 };
 
 function Dashboard({ onNavigate }) {
@@ -270,9 +287,34 @@ function Dashboard({ onNavigate }) {
           count: counts.companies || 0,
           icon: ICONS.seller,
           color: '#2563eb',
-          onClick: () => onNavigate('/settings/company')
+          onClick: () => onNavigate('/settings/company'),
+          module: 'Company'
+        },
+        {
+          title: 'Users',
+          count: counts.users || 0,
+          icon: ICONS.user,
+          color: '#7c3aed',
+          onClick: () => onNavigate('/settings/user'),
+          module: 'User'
+        },
+        {
+          title: 'Plans',
+          count: counts.plans || 0,
+          icon: ICONS.plan,
+          color: '#0891b2',
+          onClick: () => onNavigate('/settings/plan'),
+          module: 'Plan'
+        },
+        {
+          title: 'Coupons',
+          count: counts.coupons || 0,
+          icon: ICONS.coupon,
+          color: '#dc2626',
+          onClick: () => onNavigate('/settings/coupon'),
+          module: 'Coupon'
         }
-      ];
+      ].filter(card => hasPermission(card.module, 'view'));
     }
 
     const allCards = [
