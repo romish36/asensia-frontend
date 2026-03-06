@@ -150,7 +150,13 @@ const CompanyProfile = ({ company, onBack, onPermissions, onChat, onEditUser, on
                                                         </td>
                                                         <td>
                                                             <span
-                                                                onClick={() => onPermissions && onPermissions(user)}
+                                                                onClick={() => {
+                                                                    if (!currentUserRole || currentUserRole === 'USER') {
+                                                                        toast.error('You do not have access to permissions');
+                                                                        return;
+                                                                    }
+                                                                    onPermissions && onPermissions(user);
+                                                                }}
                                                                 style={{ color: '#2563eb', cursor: 'pointer', textDecoration: 'underline', fontWeight: '600' }}
                                                             >
                                                                 Permissions

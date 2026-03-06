@@ -43,10 +43,17 @@ function AppLayout({ children, activeKey, activeTitle, onNavSelect, onLogout }) 
   const [unreadCount, setUnreadCount] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const socketRef = React.useRef(null);
 
   React.useEffect(() => {
     const token = sessionStorage.getItem('token');
-    if (!token) return;
+    if (!token) {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        socketRef.current = null;
+      }
+      return;
+    }
 
     let isSubscribed = true;
 
@@ -67,29 +74,51 @@ function AppLayout({ children, activeKey, activeTitle, onNavSelect, onLogout }) 
     fetchUnread();
 
     // Socket for real-time updates
-    const socket = io(SOCKET_URL, {
-      transports: ["websocket", "polling"]
-    });
+    if (!socketRef.current) {
+      socketRef.current = io(SOCKET_URL, {
+        transports: ["polling", "websocket"],
+        reconnectionAttempts: 5,
+        reconnectionDelay: 1000
+      });
+    }
+    const socket = socketRef.current;
 
-    socket.on('connect', () => {
+    const handleConnect = () => {
       socket.emit('identify', token);
-    });
+    };
 
-    socket.on('unreadUpdate', () => {
+    const handleUnreadUpdate = (data) => {
+      // Ignore if we are the sender (though server shouldn't send it)
+      const user = JSON.parse(sessionStorage.getItem('user'));
+      if (data && data.senderId === user?._id) return;
+
       if (isSubscribed) {
-        setUnreadCount(prev => prev + 1);
+        fetchUnread();
       }
-    });
+    };
 
-    socket.on('unreadCleared', () => {
-      fetchUnread();
-    });
+    const handleUnreadCleared = () => {
+      if (isSubscribed) {
+        fetchUnread();
+      }
+    };
+
+    socket.on('connect', handleConnect);
+    socket.on('unreadUpdate', handleUnreadUpdate);
+    socket.on('unreadCleared', handleUnreadCleared);
+
+    if (socket.connected) {
+      handleConnect();
+    }
 
     return () => {
       isSubscribed = false;
-      socket.off('unreadUpdate');
-      socket.off('unreadCleared');
-      socket.disconnect();
+      socket.off('connect', handleConnect);
+      socket.off('unreadUpdate', handleUnreadUpdate);
+      socket.off('unreadCleared', handleUnreadCleared);
+      // We don't disconnect here in development to avoid strict mode issues
+      // The socket will be disconnected when the user logs out (token becomes null)
+      // or when the browser session ends.
     };
   }, []);
 

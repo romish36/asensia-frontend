@@ -169,6 +169,32 @@ thead th.up-col-sticky {
     width: 100px;
 }
 
+/* Column header: label on top, checkbox below */
+.up-col-header-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.up-col-header-cell span {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #475569;
+    letter-spacing: 0.04em;
+}
+
+.up-col-checkbox {
+    width: 16px !important;
+    height: 16px !important;
+    cursor: pointer;
+    accent-color: #0c3447;
+    margin: 0;
+    border-radius: 3px;
+}
+
 .up-select-all-header {
     width: 120px;
     background: #ecfdf5 !important;

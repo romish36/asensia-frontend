@@ -57,7 +57,10 @@ function InStock() {
     });
 
     const [searchQuery, setSearchQuery] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(() => {
+        const savedPage = sessionStorage.getItem('lastPage_InStock');
+        return savedPage ? parseInt(savedPage) : 1;
+    });
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [totalEntries, setTotalEntries] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
@@ -125,6 +128,10 @@ function InStock() {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        sessionStorage.setItem('lastPage_InStock', currentPage);
+    }, [currentPage]);
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {

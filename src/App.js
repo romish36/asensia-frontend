@@ -695,7 +695,19 @@ function App() {
                 } />
                 <Route path="/settings/user/add" element={<PermissionProtectedRoute module="User" action="add"><UserForm isPage={true} isOpen={true} onClose={() => navigate(`${getRolePrefix()}/settings/user`)} /></PermissionProtectedRoute>} />
                 <Route path="/settings/user/edit" element={<PermissionProtectedRoute module="User" action="update"><UserForm isPage={true} isOpen={true} user={selectedUser} onClose={() => navigate(`${getRolePrefix()}/settings/user`)} /></PermissionProtectedRoute>} />
-                <Route path="/settings/user/permissions" element={<PermissionProtectedRoute module="User" action="status"><UserPermissions user={selectedUserForPermissions} onClose={() => navigate(`${getRolePrefix()}/settings/user`)} /></PermissionProtectedRoute>} />
+                <Route path="/settings/user/permissions" element={
+                  (() => {
+                    const routeUser = getSessionUser();
+                    if (!routeUser || routeUser.role === 'USER') {
+                      return <Navigate to={`${getRolePrefix()}/settings/user`} replace />;
+                    }
+                    return (
+                      <PermissionProtectedRoute module="User" action="status">
+                        <UserPermissions user={selectedUserForPermissions} onClose={() => navigate(`${getRolePrefix()}/settings/user`)} />
+                      </PermissionProtectedRoute>
+                    );
+                  })()
+                } />
 
                 {/* Plan Management (SUPER_ADMIN only) */}
                 <Route path="/settings/plan" element={

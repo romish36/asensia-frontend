@@ -26,7 +26,10 @@ function ExpensesList({ onAddExpenses, onEditExpenses }) {
     });
 
     const [searchQuery, setSearchQuery] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(() => {
+        const savedPage = sessionStorage.getItem('lastPage_ExpensesList');
+        return savedPage ? parseInt(savedPage) : 1;
+    });
     const [itemsPerPage, setItemsPerPage] = useState(10);
     // const [isModalOpen, setIsModalOpen] = useState(false); // Handled by parent
 
@@ -67,6 +70,10 @@ function ExpensesList({ onAddExpenses, onEditExpenses }) {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        sessionStorage.setItem('lastPage_ExpensesList', currentPage);
+    }, [currentPage]);
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {

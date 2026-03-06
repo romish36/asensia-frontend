@@ -66,10 +66,22 @@ const UserPermissions = ({ user, onClose }) => {
     };
 
     // Toggle a single permission
+    // Special rule: clicking "add" when turning it ON selects the entire row
     const handleToggle = (module, action) => {
         setPermissions(prev => {
             const moduleData = prev[module] || {};
             const newValue = moduleData[action] === 1 ? 0 : 1;
+
+            // If "add" is being checked ON, select all actions for this module
+            if (action === 'add' && newValue === 1) {
+                const allChecked = {};
+                dbActions.forEach(a => { allChecked[a] = 1; });
+                return {
+                    ...prev,
+                    [module]: allChecked
+                };
+            }
+
             return {
                 ...prev,
                 [module]: {
@@ -92,6 +104,25 @@ const UserPermissions = ({ user, onClose }) => {
                 [module]: newModuleData
             };
         });
+    };
+
+    // Toggle entire column (all modules for one action)
+    const handleColumnToggle = (action, checked) => {
+        setPermissions(prev => {
+            const updated = { ...prev };
+            MODULES.forEach(module => {
+                updated[module] = {
+                    ...(updated[module] || {}),
+                    [action]: checked ? 1 : 0
+                };
+            });
+            return updated;
+        });
+    };
+
+    // Check if entire column is selected
+    const isColumnSelected = (action) => {
+        return MODULES.every(module => permissions[module]?.[action] === 1);
     };
 
     // Toggle entire system (Select All Modules)
@@ -182,7 +213,16 @@ const UserPermissions = ({ user, onClose }) => {
                                 </th>
                                 {dbActions.map(action => (
                                     <th key={action} className="up-action-header">
-                                        {action.toUpperCase()}
+                                        <div className="up-col-header-cell">
+                                            <span>{action.toUpperCase()}</span>
+                                            <input
+                                                type="checkbox"
+                                                title={`Select all ${action}`}
+                                                checked={isColumnSelected(action)}
+                                                onChange={(e) => handleColumnToggle(action, e.target.checked)}
+                                                className="up-col-checkbox"
+                                            />
+                                        </div>
                                     </th>
                                 ))}
                                 <th className="up-select-all-header">Select All</th>

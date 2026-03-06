@@ -1607,8 +1607,9 @@
   justify-content: space-between;
   gap: 16px;
   align-items: flex-end;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .list-page-search-box {
@@ -1644,19 +1645,17 @@
 .list-page-filter-box {
   display: flex;
   align-items: flex-end;
-  gap: 8px;
-  gap: 8px;
+  gap: 12px;
   justify-content: flex-start;
+  flex-wrap: wrap;
+  flex: 1;
 }
 
 .list-page-filter-group {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  width: 200px !important;
-  min-width: 200px !important;
-  max-width: 200px !important;
-  flex: 0 0 200px !important;
+  width: 200px;
 }
 
 .list-page-filter-label {
@@ -1982,19 +1981,28 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .list-page-toolbar {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .list-page-filter-box {
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    width: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .list-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
   }
 
   .list-page-action-buttons {
+    width: 100%;
     justify-content: flex-start;
+    flex-wrap: wrap;
   }
 }
 
@@ -2005,7 +2013,26 @@
 
   .list-page-footer {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
+  }
+
+  .list-page-pagination {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .list-page-filter-group {
+    width: 100%;
+  }
+
+  .list-page-btn {
+    width: 100%;
+  }
+
+  .list-page-action-buttons .list-page-btn {
+    flex: 1;
+    min-width: 120px;
   }
 }
 

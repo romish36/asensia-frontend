@@ -3,7 +3,12 @@
     flex-direction: column;
     gap: 6px;
     width: 250px;
-    /* Match standard filter input width */
+}
+
+@media (max-width: 1200px) {
+    .custom-search-container {
+        width: 100%;
+    }
 }
 
 .custom-search-label {

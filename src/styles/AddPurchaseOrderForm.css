@@ -48,6 +48,24 @@
     margin-bottom: 20px;
 }
 
+@media (max-width: 1024px) {
+
+    .po-grid-5,
+    .po-grid-4,
+    .po-grid-4-equal {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .po-grid-5,
+    .po-grid-4,
+    .po-grid-4-equal {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Product Row */
 .po-product-box {
     border: 1px solid #e5e7eb;
@@ -61,15 +79,47 @@
 .po-prod-row-1 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 15px;
     margin-bottom: 15px;
+}
+
+@media (max-width: 1024px) {
+    .po-prod-row-1 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .po-prod-row-1 {
+        grid-template-columns: 1fr;
+    }
 }
 
 .po-prod-row-2 {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
+    gap: 15px;
     align-items: end;
+}
+
+@media (max-width: 1024px) {
+    .po-prod-row-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .po-btn-remove {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .po-prod-row-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .po-btn-remove {
+        grid-column: span 1;
+    }
 }
 
 .po-item-header {
@@ -173,6 +223,21 @@
     margin-top: 30px;
     padding-top: 20px;
     border-top: 1px solid #e5e7eb;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+    .po-actions {
+        flex-direction: column;
+    }
+
+    .po-btn-cancel,
+    .po-btn-submit,
+    .po-btn-add {
+        width: 100%;
+        margin-right: 0;
+    }
 }
 
 .po-btn-add {
@@ -287,11 +352,35 @@
     margin-bottom: 15px;
 }
 
+@media (max-width: 1200px) {
+    .add-seller-grid-row-5 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .add-seller-grid-row-5 {
+        grid-template-columns: 1fr;
+    }
+}
+
 .add-seller-grid-row-6 {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 15px;
     margin-bottom: 15px;
+}
+
+@media (max-width: 1200px) {
+    .add-seller-grid-row-6 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .add-seller-grid-row-6 {
+        grid-template-columns: 1fr;
+    }
 }
 
 .add-seller-input-group {
@@ -340,4 +429,15 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 15px;
+}
+@media (max-width: 1200px) {
+    .po-new-product-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .po-new-product-grid {
+        grid-template-columns: 1fr;
+    }
 }

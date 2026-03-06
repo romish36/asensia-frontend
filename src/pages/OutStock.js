@@ -36,7 +36,10 @@ function OutStock() {
     });
 
     const [searchQuery, setSearchQuery] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(() => {
+        const savedPage = sessionStorage.getItem('lastPage_OutStock');
+        return savedPage ? parseInt(savedPage) : 1;
+    });
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [totalEntries, setTotalEntries] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
@@ -104,6 +107,10 @@ function OutStock() {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        sessionStorage.setItem('lastPage_OutStock', currentPage);
+    }, [currentPage]);
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {

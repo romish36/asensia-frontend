@@ -16,7 +16,10 @@ function UserList({ onAddUser, onEditUser, onPermissions, onChat }) {
     const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(() => {
+        const savedPage = sessionStorage.getItem('lastPage_UserList');
+        return savedPage ? parseInt(savedPage) : 1;
+    });
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [totalEntries, setTotalEntries] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
@@ -65,6 +68,10 @@ function UserList({ onAddUser, onEditUser, onPermissions, onChat }) {
     };
 
     useEffect(() => {
+        sessionStorage.setItem('lastPage_UserList', currentPage);
+    }, [currentPage]);
+
+    useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
             fetchUsers(searchQuery, currentPage, itemsPerPage);
         }, 200);
@@ -107,6 +114,11 @@ function UserList({ onAddUser, onEditUser, onPermissions, onChat }) {
     };
 
     const handlePermissions = (user) => {
+        const currentUser = JSON.parse(sessionStorage.getItem('user'));
+        if (!currentUser || currentUser.role === 'USER') {
+            toast.error('You do not have access to permissions');
+            return;
+        }
         if (onPermissions) {
             onPermissions(user);
         }

@@ -15,7 +15,10 @@ function CompanyList({ onAddCompany, onEditCompany, onViewProfile }) {
     const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(() => {
+        const savedPage = sessionStorage.getItem('lastPage_CompanyList');
+        return savedPage ? parseInt(savedPage) : 1;
+    });
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [totalEntries, setTotalEntries] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
@@ -67,6 +70,10 @@ function CompanyList({ onAddCompany, onEditCompany, onViewProfile }) {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        sessionStorage.setItem('lastPage_CompanyList', currentPage);
+    }, [currentPage]);
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {

@@ -20,7 +20,10 @@ function CustomerList({ onNavigateToProfile, onAddCustomer, onEditCustomer }) {
     const [filterType, setFilterType] = useState('');
     const [appliedType, setAppliedType] = useState('');
     const [pageSize, setPageSize] = useState(10);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(() => {
+        const savedPage = sessionStorage.getItem('lastPage_CustomerList');
+        return savedPage ? parseInt(savedPage) : 1;
+    });
     const [totalEntries, setTotalEntries] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const [viewModalOpen, setViewModalOpen] = useState(false);
@@ -69,6 +72,10 @@ function CustomerList({ onNavigateToProfile, onAddCustomer, onEditCustomer }) {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        sessionStorage.setItem('lastPage_CustomerList', page);
+    }, [page]);
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {

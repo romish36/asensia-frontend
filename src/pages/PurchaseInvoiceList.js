@@ -79,7 +79,10 @@ function PurchaseInvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigat
 
   const [search, setSearch] = useState('');
   const [pageSize, setPageSize] = useState(10);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(() => {
+    const savedPage = sessionStorage.getItem('lastPage_PurchaseInvoiceList');
+    return savedPage ? parseInt(savedPage) : 1;
+  });
   const [totalEntries, setTotalEntries] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -130,6 +133,10 @@ function PurchaseInvoiceList({ onPreview, onAddInvoice, onEditInvoice, onNavigat
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    sessionStorage.setItem('lastPage_PurchaseInvoiceList', page);
+  }, [page]);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {

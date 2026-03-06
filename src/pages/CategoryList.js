@@ -16,7 +16,10 @@ function CategoryList({ onAddCategory, onEditCategory }) {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [pageSize, setPageSize] = useState(10);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(() => {
+        const savedPage = sessionStorage.getItem('lastPage_CategoryList');
+        return savedPage ? parseInt(savedPage) : 1;
+    });
     const [totalEntries, setTotalEntries] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const [userRole, setUserRole] = useState('');
@@ -71,6 +74,10 @@ function CategoryList({ onAddCategory, onEditCategory }) {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        sessionStorage.setItem('lastPage_CategoryList', page);
+    }, [page]);
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {

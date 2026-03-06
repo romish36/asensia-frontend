@@ -109,8 +109,17 @@ const UserForm = ({ isOpen, onClose, user, isPage }) => {
         const { name, value, type, files } = e.target;
         if (type === 'file') {
             if (files && files[0]) {
+                const file = files[0];
+                const maxSize = 2500 * 1024; // 2500 KB in bytes
+
+                if (file.size > maxSize) {
+                    toast.error("image is too large");
+                    e.target.value = ''; // Reset input
+                    return;
+                }
+
                 try {
-                    const base64 = await convertToBase64(files[0]);
+                    const base64 = await convertToBase64(file);
                     setFormData(prev => ({ ...prev, [name]: base64 }));
                 } catch (error) {
                     toast.error("Error processing file");

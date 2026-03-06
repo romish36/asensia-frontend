@@ -32,7 +32,10 @@ function ProductList({ onAddProduct, onEditProduct }) {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [pageSize, setPageSize] = useState(10);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(() => {
+        const savedPage = sessionStorage.getItem('lastPage_ProductList');
+        return savedPage ? parseInt(savedPage) : 1;
+    });
     const [companies, setCompanies] = useState([]);
     const [selectedCompany, setSelectedCompany] = useState('');
     const [userRole, setUserRole] = useState('');
@@ -184,6 +187,10 @@ function ProductList({ onAddProduct, onEditProduct }) {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        sessionStorage.setItem('lastPage_ProductList', page);
+    }, [page]);
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
