@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import { io } from 'socket.io-client';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import API_BASE_URL from '../config/apiConfig';
+import ChatSkeleton from '../components/ui/ChatSkeleton';
 import '../styles/ChatPage.css';
 
 const SOCKET_URL = API_BASE_URL.replace('/api', '');
@@ -42,10 +45,13 @@ class ChatPage extends Component {
             isUploading: false,
             typingUser: null,
             isEditing: false,
-            editingMessageId: null,
             activeDropdownId: null,
-            filePreview: null
+            filePreview: null,
+            isLoading: true,
+            isHistoryLoading: false,
+            isScrollPositioning: false
         };
+        this.containerRef = React.createRef();
         this.messagesEndRef = React.createRef();
         this.fileInputRef = React.createRef();
         this.typingTimeout = null;
@@ -75,11 +81,14 @@ class ChatPage extends Component {
             }
         }
 
-        // Only scroll to bottom if message count changed (new message sent or received)
-        // or if switching to a new partner (history fetched)
-        if (prevState.messages.length !== this.state.messages.length) {
+        // If we just finished loading history, scroll instantly to bottom
+        if (prevState.isHistoryLoading && !this.state.isHistoryLoading) {
+            this.scrollToBottom('auto');
+        } else if (prevState.messages.length < this.state.messages.length) {
+            // New message arrived/sent - use smooth scroll
             this.scrollToBottom('smooth');
         } else if (prevState.selectedPartner?._id !== this.state.selectedPartner?._id) {
+            // Partner switched - ensure we are at bottom (even if empty)
             this.scrollToBottom('auto');
         }
     }
@@ -119,6 +128,8 @@ class ChatPage extends Component {
                     this.markAsRead(roomId);
                 }
             }
+            // Move partner to top of the list
+            this.movePartnerToTop(message.roomId);
         });
 
         socket.on('messagesRead', (data) => {
@@ -154,19 +165,29 @@ class ChatPage extends Component {
             // Defensive: ensure we don't count messages sent by ourselves
             if (String(data.senderId) === String(this.state.user?._id)) return;
 
-            this.setState(prevState => ({
-                partners: prevState.partners.map(p => {
-                    const pRoomId = this.getRoomId(this.state.user, p);
-                    if (pRoomId === data.roomId) {
-                        const partnerId = String(p._id || p.id);
-                        const isCurrentChat = prevState.selectedPartner && String(prevState.selectedPartner._id || prevState.selectedPartner.id) === partnerId;
+            this.setState(prevState => {
+                const newPartners = [...prevState.partners];
+                const index = newPartners.findIndex(p => this.getRoomId(this.state.user, p) === data.roomId);
 
-                        // Increment ONLY if not the currently open chat
-                        return { ...p, unreadCount: isCurrentChat ? 0 : (p.unreadCount || 0) + 1 };
-                    }
-                    return p;
-                })
-            }));
+                if (index !== -1) {
+                    const [partner] = newPartners.splice(index, 1);
+                    const partnerId = String(partner._id || partner.id);
+                    const isCurrentChat = prevState.selectedPartner && String(prevState.selectedPartner._id || prevState.selectedPartner.id) === partnerId;
+
+                    // Clone the partner to avoid mutating state directly
+                    const updatedPartner = {
+                        ...partner,
+                        unreadCount: isCurrentChat ? 0 : (partner.unreadCount || 0) + 1
+                    };
+
+                    newPartners.unshift(updatedPartner);
+                } else {
+                    // Partner not in local list (e.g., new chat), so we re-fetch the list
+                    this.fetchPartners();
+                }
+
+                return { partners: newPartners };
+            });
         });
 
         socket.on('unreadCleared', () => {
@@ -194,6 +215,19 @@ class ChatPage extends Component {
         });
 
         this.setState({ socket });
+    }
+
+    movePartnerToTop = (roomId) => {
+        this.setState(prevState => {
+            const index = prevState.partners.findIndex(p => this.getRoomId(this.state.user, p) === roomId);
+            if (index > 0) { // If > 0, we need to move it (0 means already at top)
+                const newPartners = [...prevState.partners];
+                const [partner] = newPartners.splice(index, 1);
+                newPartners.unshift(partner);
+                return { partners: newPartners };
+            }
+            return null; // No state change if already at top or not found
+        });
     }
 
     getRoomId = (me, partner) => {
@@ -247,20 +281,26 @@ class ChatPage extends Component {
             this.setState({ partners: res.data });
         } catch (error) {
             console.error('Error fetching partners:', error);
+        } finally {
+            this.setState({ isLoading: false });
         }
     }
 
     fetchHistory = async (roomId) => {
+        this.setState({ isHistoryLoading: true, messages: [] });
         try {
             const res = await axios.get(`${API_BASE_URL}/chat/history/${roomId}`, {
                 headers: { 'Authorization': `Bearer ${this.state.token}` }
             });
-            this.setState({ messages: res.data }, () => {
-                // Use auto (instant) scroll for initial history load
+            this.setState({ messages: res.data, isHistoryLoading: false }, () => {
+                // Scroll instantly once DOM is updated
                 this.scrollToBottom('auto');
+                // Double-check scroll after a brief layout tick in case of images
+                setTimeout(() => this.scrollToBottom('auto'), 50);
             });
         } catch (error) {
             console.error('Error fetching history:', error);
+            this.setState({ isHistoryLoading: false });
         }
     }
 
@@ -424,8 +464,26 @@ class ChatPage extends Component {
     }
 
     scrollToBottom = (behavior = "smooth") => {
-        if (this.messagesEndRef.current) {
-            this.messagesEndRef.current.scrollIntoView({ behavior });
+        const container = this.containerRef.current;
+        if (container) {
+            if (behavior === 'auto') {
+                // Temporarily disable any CSS scroll-behavior smooth so this is truly instant
+                container.style.scrollBehavior = 'auto';
+                container.scrollTop = container.scrollHeight;
+
+                // Keep it at bottom if there are slight layout shifts
+                container.scrollTo({ top: container.scrollHeight, behavior: 'instant' });
+
+                // Restore original behavior after next paint
+                requestAnimationFrame(() => {
+                    container.style.scrollBehavior = '';
+                });
+            } else {
+                container.scrollTo({
+                    top: container.scrollHeight,
+                    behavior: behavior
+                });
+            }
         }
     }
 
@@ -652,7 +710,12 @@ class ChatPage extends Component {
     }
 
     render() {
-        const { partners, selectedPartner, messages, newMessage, user, isUploading, typingUser, isEditing, activeDropdownId } = this.state;
+        const { partners, selectedPartner, messages, newMessage, user, isUploading, typingUser, isEditing, activeDropdownId, isLoading, isHistoryLoading } = this.state;
+
+        if (isLoading) {
+            return <ChatSkeleton />;
+        }
+
         let lastDate = null;
 
         return (
@@ -721,92 +784,111 @@ class ChatPage extends Component {
                                 </div>
 
                                 <div className="flex-grow-1 d-flex flex-column overflow-hidden">
-                                    <div className="flex-grow-1 p-4 overflow-auto bg-light chat-messages-container d-flex flex-column">
-                                        {messages.map((msg, idx) => {
-                                            const senderIdStr = (msg.senderId && typeof msg.senderId === 'object') ? msg.senderId._id : msg.senderId;
-                                            const isMe = user && senderIdStr === user._id;
-                                            const msgDate = new Date(msg.createdAt).toDateString();
-                                            const showDateSeparator = msgDate !== lastDate;
-                                            lastDate = msgDate;
-                                            const msgId = msg._id || msg.id;
-
-                                            return (
-                                                <React.Fragment key={idx}>
-                                                    {showDateSeparator && (
-                                                        <div className="d-flex justify-content-center my-4">
-                                                            <div className="chat-date-separator">
-                                                                {this.formatDateSeparator(msg.createdAt)}
-                                                            </div>
+                                    <div
+                                        ref={this.containerRef}
+                                        className="flex-grow-1 p-4 overflow-auto bg-light chat-messages-container d-flex flex-column"
+                                    >
+                                        {isHistoryLoading ? (
+                                            <div className="flex-grow-1">
+                                                {[...Array(6)].map((_, i) => (
+                                                    <div key={i} className={`d-flex mb-4 ${i % 2 === 0 ? 'justify-content-start' : 'justify-content-end'}`}>
+                                                        <div style={{ width: '45%' }}>
+                                                            <Skeleton height={50} borderRadius={15} baseColor="#e5e7eb" highlightColor="#f9fafb" />
                                                         </div>
-                                                    )}
-                                                    <div className={`d-flex mb-4 ${isMe ? 'justify-content-end' : 'justify-content-start'}`}>
-                                                        {!isMe && (
-                                                            <div className="avatar-sm rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-2 mt-auto shadow-sm overflow-hidden" style={{ width: '32px', height: '32px', fontSize: '11px' }}>
-                                                                {msg.senderId?.userProfile && this.getFileUrl(msg.senderId.userProfile) ? (
-                                                                    <img src={this.getFileUrl(msg.senderId.userProfile)} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                                                ) : (
-                                                                    msg.senderId?.role === 'SUPER_ADMIN' ? 'S' : (msg.senderId?.userName?.substring(0, 1).toUpperCase() || '?')
-                                                                )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : messages.length > 0 ? (
+                                            messages.map((msg, idx) => {
+                                                const senderIdStr = (msg.senderId && typeof msg.senderId === 'object') ? msg.senderId._id : msg.senderId;
+                                                const isMe = user && senderIdStr === user._id;
+                                                const msgDate = new Date(msg.createdAt).toDateString();
+                                                const showDateSeparator = msgDate !== lastDate;
+                                                lastDate = msgDate;
+                                                const msgId = msg._id || msg.id;
+
+                                                return (
+                                                    <React.Fragment key={idx}>
+                                                        {showDateSeparator && (
+                                                            <div className="d-flex justify-content-center my-4">
+                                                                <div className="chat-date-separator">
+                                                                    {this.formatDateSeparator(msg.createdAt)}
+                                                                </div>
                                                             </div>
                                                         )}
-                                                        <div className={`message-container-inner ${isMe ? 'd-flex flex-column align-items-end' : 'd-flex flex-column'}`} style={{ maxWidth: '80%', position: 'relative' }}>
-                                                            <div className={`message-bubble-whatsapp p-2 px-3 ${isMe ? 'bg-primary-whatsapp' : 'bg-white-whatsapp'}`}>
-                                                                <div className="message-actions-dropdown" onClick={() => this.toggleDropdown(msgId)}>
-                                                                    <i className="fa fa-chevron-down"></i>
+                                                        <div className={`d-flex mb-4 ${isMe ? 'justify-content-end' : 'justify-content-start'}`}>
+                                                            {!isMe && (
+                                                                <div className="avatar-sm rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-2 mt-auto shadow-sm overflow-hidden" style={{ width: '32px', height: '32px', fontSize: '11px' }}>
+                                                                    {msg.senderId?.userProfile && this.getFileUrl(msg.senderId.userProfile) ? (
+                                                                        <img src={this.getFileUrl(msg.senderId.userProfile)} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                                    ) : (
+                                                                        msg.senderId?.role === 'SUPER_ADMIN' ? 'S' : (msg.senderId?.userName?.substring(0, 1).toUpperCase() || '?')
+                                                                    )}
                                                                 </div>
+                                                            )}
+                                                            <div className={`message-container-inner ${isMe ? 'd-flex flex-column align-items-end' : 'd-flex flex-column'}`} style={{ maxWidth: '80%', position: 'relative' }}>
+                                                                <div className={`message-bubble-whatsapp p-2 px-3 ${isMe ? 'bg-primary-whatsapp' : 'bg-white-whatsapp'}`}>
+                                                                    <div className="message-actions-dropdown" onClick={() => this.toggleDropdown(msgId)}>
+                                                                        <i className="fa fa-chevron-down"></i>
+                                                                    </div>
 
-                                                                {activeDropdownId === msgId && (
-                                                                    <div className="whatsapp-dropdown-container">
-                                                                        <div className="dropdown-menu-whatsapp">
-                                                                            {isMe && !msg.fileUrl && (
-                                                                                <button className="dropdown-item-whatsapp" onClick={() => this.handleEditClick(msg)}>
-                                                                                    <i className="fa fa-edit"></i> Edit
+                                                                    {activeDropdownId === msgId && (
+                                                                        <div className="whatsapp-dropdown-container">
+                                                                            <div className="dropdown-menu-whatsapp">
+                                                                                {isMe && !msg.fileUrl && (
+                                                                                    <button className="dropdown-item-whatsapp" onClick={() => this.handleEditClick(msg)}>
+                                                                                        <i className="fa fa-edit"></i> Edit
+                                                                                    </button>
+                                                                                )}
+                                                                                <button className="dropdown-item-whatsapp text-danger" onClick={() => this.handleDeleteMessageClick(msg)}>
+                                                                                    <i className="fa fa-trash"></i> Delete
                                                                                 </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    )}
+
+                                                                    {!isMe && <div className="fw-bold mb-1" style={{ fontSize: '11px', color: '#6366f1' }}>{msg.senderId?.role === 'SUPER_ADMIN' ? 'Support' : msg.senderId?.userName}</div>}
+                                                                    <div className="message-content-wrapper d-flex align-items-end flex-wrap">
+                                                                        <div className="message-content flex-grow-1 me-2">
+                                                                            {msg.message && <div className="message-text" style={{ wordBreak: 'break-word' }}>{msg.message}</div>}
+                                                                            {this.renderFileContent(msg, isMe)}
+                                                                        </div>
+                                                                        <div className="message-metadata d-flex align-items-center ms-auto" style={{ fontSize: '10px', opacity: 0.8, alignSelf: 'flex-end', paddingBottom: '2px' }}>
+                                                                            {msg.isEdited && <span className="me-1 italic" style={{ fontSize: '9px' }}>(edited)</span>}
+                                                                            <span className="me-1" style={{ whiteSpace: 'nowrap' }}>{new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).toLowerCase()}</span>
+                                                                            {isMe && (
+                                                                                <span className="whatsapp-status-ticks">
+                                                                                    {msg.isRead ? (
+                                                                                        <i className="fa fa-check-double" style={{ color: '#34b7f1' }}></i>
+                                                                                    ) : msg.isDelivered ? (
+                                                                                        <i className="fa fa-check-double text-muted"></i>
+                                                                                    ) : (
+                                                                                        <i className="fa fa-check text-muted"></i>
+                                                                                    )}
+                                                                                </span>
                                                                             )}
-                                                                            <button className="dropdown-item-whatsapp text-danger" onClick={() => this.handleDeleteMessageClick(msg)}>
-                                                                                <i className="fa fa-trash"></i> Delete
-                                                                            </button>
                                                                         </div>
                                                                     </div>
-                                                                )}
-
-                                                                {!isMe && <div className="fw-bold mb-1" style={{ fontSize: '11px', color: '#6366f1' }}>{msg.senderId?.role === 'SUPER_ADMIN' ? 'Support' : msg.senderId?.userName}</div>}
-                                                                <div className="message-content-wrapper d-flex align-items-end flex-wrap">
-                                                                    <div className="message-content flex-grow-1 me-2">
-                                                                        {msg.message && <div className="message-text" style={{ wordBreak: 'break-word' }}>{msg.message}</div>}
-                                                                        {this.renderFileContent(msg, isMe)}
-                                                                    </div>
-                                                                    <div className="message-metadata d-flex align-items-center ms-auto" style={{ fontSize: '10px', opacity: 0.8, alignSelf: 'flex-end', paddingBottom: '2px' }}>
-                                                                        {msg.isEdited && <span className="me-1 italic" style={{ fontSize: '9px' }}>(edited)</span>}
-                                                                        <span className="me-1" style={{ whiteSpace: 'nowrap' }}>{new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).toLowerCase()}</span>
-                                                                        {isMe && (
-                                                                            <span className="whatsapp-status-ticks">
-                                                                                {msg.isRead ? (
-                                                                                    <i className="fa fa-check-double" style={{ color: '#34b7f1' }}></i>
-                                                                                ) : msg.isDelivered ? (
-                                                                                    <i className="fa fa-check-double text-muted"></i>
-                                                                                ) : (
-                                                                                    <i className="fa fa-check text-muted"></i>
-                                                                                )}
-                                                                            </span>
-                                                                        )}
-                                                                    </div>
                                                                 </div>
                                                             </div>
+                                                            {isMe && (
+                                                                <div className="avatar-sm rounded-circle bg-primary text-white d-flex align-items-center justify-content-center ms-2 mt-auto shadow-sm overflow-hidden" style={{ width: '32px', height: '32px', fontSize: '11px', background: '#4c1d95' }}>
+                                                                    {user?.userProfile && this.getFileUrl(user.userProfile) ? (
+                                                                        <img src={this.getFileUrl(user.userProfile)} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                                    ) : (
+                                                                        user?.userName?.substring(0, 1).toUpperCase() || 'U'
+                                                                    )}
+                                                                </div>
+                                                            )}
                                                         </div>
-                                                        {isMe && (
-                                                            <div className="avatar-sm rounded-circle bg-primary text-white d-flex align-items-center justify-content-center ms-2 mt-auto shadow-sm overflow-hidden" style={{ width: '32px', height: '32px', fontSize: '11px', background: '#4c1d95' }}>
-                                                                {user?.userProfile && this.getFileUrl(user.userProfile) ? (
-                                                                    <img src={this.getFileUrl(user.userProfile)} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                                                ) : (
-                                                                    user?.userName?.substring(0, 1).toUpperCase() || 'Y'
-                                                                )}
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </React.Fragment>
-                                            );
-                                        })}
+                                                    </React.Fragment>
+                                                );
+                                            })
+                                        ) : (
+                                            <div className="flex-grow-1 d-flex align-items-center justify-content-center text-muted">
+                                                No messages yet. Say hello!
+                                            </div>
+                                        )}
                                         {typingUser && (
                                             <div className="d-flex mb-3 justify-content-start">
                                                 <div className="p-2 rounded-4 bg-white shadow-sm italic text-muted small">
