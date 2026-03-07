@@ -33,9 +33,10 @@ function withRouter(Component) {
 class ChatPage extends Component {
     constructor(props) {
         super(props);
+        const initialPartner = props.router?.location?.state?.partner || props.location?.state?.partner;
         this.state = {
-            partners: [],
-            selectedPartner: null,
+            partners: initialPartner ? [initialPartner] : [],
+            selectedPartner: initialPartner || null,
             messages: [],
             newMessage: '',
             user: JSON.parse(sessionStorage.getItem('user')),
@@ -47,7 +48,7 @@ class ChatPage extends Component {
             editingMessageId: null,
             activeDropdownId: null,
             filePreview: null,
-            loadingPartners: true,
+            loadingPartners: !initialPartner,
             loadingMessages: false
         };
         this.messagesEndRef = React.createRef();
@@ -61,9 +62,10 @@ class ChatPage extends Component {
             return;
         }
         this.initSocket();
-        this.fetchPartners().then(() => {
-            this.handleInitialPartner();
-        });
+        this.fetchPartners();
+        if (this.state.selectedPartner) {
+            window.history.replaceState(null, '');
+        }
         document.addEventListener('mousedown', this.handleClickOutside);
     }
 
@@ -217,22 +219,9 @@ class ChatPage extends Component {
         return `company_${companyId}_admin_user_${userId}`;
     }
 
-    handleInitialPartner = () => {
-        const { location } = this.props;
-        if (location?.state?.partner) {
-            const partner = location.state.partner;
-            this.setState(prevState => {
-                const partnerExists = prevState.partners.find(p => p._id === partner._id);
-                // Merge data if exists to ensure we have userProfile and companyName
-                const finalPartner = partnerExists ? { ...partnerExists, ...partner } : partner;
-                return {
-                    selectedPartner: finalPartner,
-                    partners: partnerExists ? prevState.partners : [partner, ...prevState.partners]
-                };
-            });
-            window.history.replaceState(null, '');
-        }
-    }
+    // handleInitialPartner logic moved to constructor for faster load without skeleton
+    // keeping handleInitialPartner as an empty shell if it's called anywhere else by mistake
+    handleInitialPartner = () => { }
 
     joinRoom = (roomId) => {
         if (this.state.socket) {
@@ -244,7 +233,9 @@ class ChatPage extends Component {
     }
 
     fetchPartners = async () => {
-        this.setState({ loadingPartners: true });
+        if (this.state.partners.length === 0) {
+            this.setState({ loadingPartners: true });
+        }
         try {
             const res = await axios.get(`${API_BASE_URL}/chat/partners`, {
                 headers: { 'Authorization': `Bearer ${this.state.token}` }
