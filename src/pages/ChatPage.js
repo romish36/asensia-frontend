@@ -114,24 +114,17 @@ class ChatPage extends Component {
         });
 
         socket.on('receiveMessage', (message) => {
-            const senderIdStr = (message.senderId && typeof message.senderId === 'object') ? (message.senderId._id || message.senderId.id) : message.senderId;
-            const receiverIdStr = (message.receiverId && typeof message.receiverId === 'object') ? (message.receiverId._id || message.receiverId.id) : message.receiverId;
-            const isMe = this.state.user && String(senderIdStr) === String(this.state.user._id);
-
             const roomId = this.getRoomId(this.state.user, this.state.selectedPartner);
             if (message.roomId === roomId) {
                 this.setState(prevState => ({
                     messages: [...prevState.messages, message]
                 }));
                 // Mark as read if received while chat is open
-                if (!isMe) {
+                const senderId = typeof message.senderId === 'string' ? message.senderId : message.senderId?._id;
+                if (this.state.user && senderId !== this.state.user._id) {
                     this.markAsRead(roomId);
                 }
             }
-
-            // Move the relevant partner to top
-            const partnerId = isMe ? receiverIdStr : senderIdStr;
-            this.movePartnerToTop(partnerId);
         });
 
         socket.on('messagesRead', (data) => {
@@ -166,7 +159,20 @@ class ChatPage extends Component {
         socket.on('unreadUpdate', (data) => {
             // Defensive: ensure we don't count messages sent by ourselves
             if (String(data.senderId) === String(this.state.user?._id)) return;
-            this.movePartnerToTop(data.senderId, data);
+
+            this.setState(prevState => ({
+                partners: prevState.partners.map(p => {
+                    const pRoomId = this.getRoomId(this.state.user, p);
+                    if (pRoomId === data.roomId) {
+                        const partnerId = String(p._id || p.id);
+                        const isCurrentChat = prevState.selectedPartner && String(prevState.selectedPartner._id || prevState.selectedPartner.id) === partnerId;
+
+                        // Increment ONLY if not the currently open chat
+                        return { ...p, unreadCount: isCurrentChat ? 0 : (p.unreadCount || 0) + 1 };
+                    }
+                    return p;
+                })
+            }));
         });
 
         socket.on('unreadCleared', () => {
@@ -213,38 +219,7 @@ class ChatPage extends Component {
         return `company_${companyId}_admin_user_${userId}`;
     }
 
-    movePartnerToTop = (rawPartnerId, unreadData = null) => {
-        if (!rawPartnerId) return;
-
-        // Ensure we handle objects or strings
-        const partnerId = (rawPartnerId && typeof rawPartnerId === 'object') ? (rawPartnerId._id || rawPartnerId.id) : rawPartnerId;
-
-        this.setState(prevState => {
-            const partners = [...prevState.partners];
-            const partnerIndex = partners.findIndex(p => String(p._id || p.id) === String(partnerId));
-
-            if (partnerIndex !== -1) {
-                // Remove existing partner and move to top
-                const partner = { ...partners[partnerIndex] };
-                partners.splice(partnerIndex, 1);
-
-                if (unreadData) {
-                    const isCurrentChat = prevState.selectedPartner && String(prevState.selectedPartner._id || prevState.selectedPartner.id) === String(partnerId);
-                    partner.unreadCount = isCurrentChat ? 0 : (partner.unreadCount || 0) + 1;
-                }
-
-                partners.unshift(partner);
-                return { partners };
-            } else {
-                // If partner not found in current list, re-fetch list from server
-                // This handles cases for new conversations or incomplete partner lists
-                this.fetchPartners();
-                return null;
-            }
-        });
-    }
-
-    // moved to constructor for faster load without skeleton
+    // handleInitialPartner logic moved to constructor for faster load without skeleton
     // keeping handleInitialPartner as an empty shell if it's called anywhere else by mistake
     handleInitialPartner = () => { }
 
@@ -325,8 +300,6 @@ class ChatPage extends Component {
                 receiverId: selectedPartner._id,
                 receiverRole: this.getPartnerRoleEnum(selectedPartner.role)
             });
-            // Move to top immediately for sender
-            this.movePartnerToTop(selectedPartner._id);
         }
 
         this.setState({ newMessage: '', isEditing: false, editingMessageId: null });
@@ -440,7 +413,6 @@ class ChatPage extends Component {
                 fileName,
                 fileSize
             });
-            this.movePartnerToTop(selectedPartner._id);
             this.handleCancelFilePreview();
         } catch (error) {
             console.error('File upload failed:', error);
