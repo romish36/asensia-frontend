@@ -679,14 +679,22 @@ const AddCompanyForm = ({ isOpen, onClose, company, isPage }) => {
 
             if (response.ok) {
                 toast.success(company ? "Company Updated Successfully" : "Company Added Successfully");
-                await fetchMyPermissions(); // Refresh Sidebar Logo and Details
-                onClose(); // Switch back to list view
+                await fetchMyPermissions();
+                onClose();
             } else {
-                toast.error(resData.message || 'Failed to save company');
+                // Return detailed error info in toast
+                const detailedError = (resData.error && typeof resData.error === 'string')
+                    ? resData.error
+                    : (resData.message || 'Server error');
+
+                toast.error(`${detailedError}${resData.errorName ? ` (${resData.errorName})` : ''}`, {
+                    autoClose: 8000 // Show for longer
+                });
+                console.error("Server Error Detail:", resData);
             }
         } catch (error) {
             console.error("Error saving company:", error);
-            toast.error("Server error");
+            toast.error(`Client Error: ${error.message}`);
         }
     };
 
