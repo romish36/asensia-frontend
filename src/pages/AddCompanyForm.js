@@ -657,8 +657,14 @@ const AddCompanyForm = ({ isOpen, onClose, company, isPage }) => {
 
         try {
             const token = sessionStorage.getItem('token');
-            const url = company ? `${API_BASE_URL}/company/${company._id || company.id}` : `${API_BASE_URL}/company`;
+            const companyId = company ? (company._id || company.id) : null;
 
+            if (company && !companyId) {
+                toast.error("Invalid Company ID. Please refresh and try again.");
+                return;
+            }
+
+            const url = company ? `${API_BASE_URL}/company/${companyId}` : `${API_BASE_URL}/company`;
             const method = company ? 'PUT' : 'POST';
 
             const response = await fetch(url, {

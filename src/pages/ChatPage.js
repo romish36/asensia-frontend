@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
@@ -46,9 +44,7 @@ class ChatPage extends Component {
             isEditing: false,
             editingMessageId: null,
             activeDropdownId: null,
-            filePreview: null,
-            loadingPartners: true,
-            loadingMessages: false
+            filePreview: null
         };
         this.messagesEndRef = React.createRef();
         this.fileInputRef = React.createRef();
@@ -244,9 +240,6 @@ class ChatPage extends Component {
     }
 
     fetchPartners = async () => {
-        if (this.state.partners.length === 0) {
-            this.setState({ loadingPartners: true });
-        }
         try {
             const res = await axios.get(`${API_BASE_URL}/chat/partners`, {
                 headers: { 'Authorization': `Bearer ${this.state.token}` }
@@ -254,24 +247,20 @@ class ChatPage extends Component {
             this.setState({ partners: res.data });
         } catch (error) {
             console.error('Error fetching partners:', error);
-        } finally {
-            this.setState({ loadingPartners: false });
         }
     }
 
     fetchHistory = async (roomId) => {
-        this.setState({ loadingMessages: true, messages: [] });
         try {
             const res = await axios.get(`${API_BASE_URL}/chat/history/${roomId}`, {
                 headers: { 'Authorization': `Bearer ${this.state.token}` }
             });
             this.setState({ messages: res.data }, () => {
+                // Use auto (instant) scroll for initial history load
                 this.scrollToBottom('auto');
             });
         } catch (error) {
             console.error('Error fetching history:', error);
-        } finally {
-            this.setState({ loadingMessages: false });
         }
     }
 
@@ -675,21 +664,7 @@ class ChatPage extends Component {
                             <button className="btn btn-sm btn-light" type="button" onClick={this.fetchPartners}><i className="fa fa-sync"></i></button>
                         </div>
                         <div className="list-group list-group-flush chat-partners-list overflow-auto flex-grow-1">
-                            {this.state.loadingPartners ? (
-                                <SkeletonTheme baseColor="#f3f4f6" highlightColor="#ffffff">
-                                    <div className="p-3">
-                                        {[...Array(6)].map((_, i) => (
-                                            <div key={i} className="d-flex align-items-center mb-3">
-                                                <Skeleton circle width={48} height={48} />
-                                                <div className="ms-3 flex-grow-1">
-                                                    <Skeleton width="70%" height={15} />
-                                                    <Skeleton width="40%" height={10} className="mt-1" />
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </SkeletonTheme>
-                            ) : partners.length > 0 ? partners.map(partner => (
+                            {partners.length > 0 ? partners.map(partner => (
                                 <button
                                     key={partner._id}
                                     type="button"
@@ -747,17 +722,7 @@ class ChatPage extends Component {
 
                                 <div className="flex-grow-1 d-flex flex-column overflow-hidden">
                                     <div className="flex-grow-1 p-4 overflow-auto bg-light chat-messages-container d-flex flex-column">
-                                        {this.state.loadingMessages ? (
-                                            <SkeletonTheme baseColor="#ffffff" highlightColor="#f3f4f6">
-                                                {[...Array(5)].map((_, i) => (
-                                                    <div key={i} className={`mb-4 d-flex ${i % 2 === 0 ? 'justify-content-start' : 'justify-content-end'}`}>
-                                                        <div style={{ width: '40%', height: '60px' }}>
-                                                            <Skeleton height={60} borderRadius={16} />
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </SkeletonTheme>
-                                        ) : messages.map((msg, idx) => {
+                                        {messages.map((msg, idx) => {
                                             const senderIdStr = (msg.senderId && typeof msg.senderId === 'object') ? msg.senderId._id : msg.senderId;
                                             const isMe = user && senderIdStr === user._id;
                                             const msgDate = new Date(msg.createdAt).toDateString();
