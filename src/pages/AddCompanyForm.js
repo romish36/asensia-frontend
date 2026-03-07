@@ -728,7 +728,7 @@ const AddCompanyForm = ({ isOpen, onClose, company, isPage }) => {
             {formData[fieldName] && (
                 <div className="image-preview-box" style={{ marginTop: '10px' }}>
                     <img
-                        src={formData[fieldName].startsWith('data:') ? formData[fieldName] : `${API_BASE_URL.replace('/api', '')}/${formData[fieldName].replace(/\\/g, '/').startsWith('/') ? formData[fieldName].replace(/\\/g, '/').substring(1) : formData[fieldName].replace(/\\/g, '/')}`}
+                        src={formData[fieldName].startsWith('data:') || formData[fieldName].startsWith('http') ? formData[fieldName] : `${API_BASE_URL.replace('/api', '')}/${formData[fieldName].replace(/\\/g, '/').startsWith('/') ? formData[fieldName].replace(/\\/g, '/').substring(1) : formData[fieldName].replace(/\\/g, '/')}`}
                         alt="Preview"
                         style={{ width: '80px', height: '80px', objectFit: 'cover', border: '1px solid #ccc', borderRadius: '4px' }}
                     />
